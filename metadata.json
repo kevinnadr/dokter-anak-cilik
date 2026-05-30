@@ -1,0 +1,6 @@
+{
+  "name": "Dokter Anak Cilik",
+  "description": "Aplikasi edukatif interaktif untuk anak-anak belajar hidup sehat dan merasakan serunya menjadi dokter kecil!",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
