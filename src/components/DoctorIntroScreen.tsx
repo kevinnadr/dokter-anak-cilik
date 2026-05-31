@@ -90,10 +90,10 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45 bg-brand-surface-lowest border-t border-l border-brand-primary/10" />
         
         <h3 className="text-xl font-bold text-brand-primary text-center">
-          Halo, Teman Cilik!
+          Halo, Dokter {userName || 'Anak'}!
         </h3>
         <p className="text-brand-on-surface/90 text-sm md:text-base font-semibold text-center mt-2 leading-relaxed">
-          Aku adalah Dokter {userName || 'Anak'}. Tugas utamaku adalah menjagamu agar tetap kuat, ceria, dan sehat setiap hari! Yuk pelajari alat rahasiaku! 👇
+          Aku dokter (doktr asli) ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
         </p>
       </motion.div>
 
