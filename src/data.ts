@@ -12,7 +12,7 @@ export const TRIVIA_TIPS = [
 export const INITIAL_PATIENTS: Patient[] = [
   {
     id: 1,
-    name: 'Ayu',
+    name: 'Budi',
     image: '👧',
     age: '6 Tahun',
     status: 'sick',
@@ -25,7 +25,7 @@ export const INITIAL_PATIENTS: Patient[] = [
   },
   {
     id: 2,
-    name: 'Sekar',
+    name: 'Siti',
     image: '👧',
     age: '7 Tahun',
     status: 'sick',
@@ -38,7 +38,7 @@ export const INITIAL_PATIENTS: Patient[] = [
   },
   {
     id: 3,
-    name: 'Putra',
+    name: 'Andi',
     image: '👦',
     age: '8 Tahun',
     status: 'sick',
@@ -65,7 +65,7 @@ export const INITIAL_PATIENTS: Patient[] = [
   },
   {
     id: 5,
-    name: 'Alex',
+    name: 'Dito',
     image: '👦',
     age: '9 Tahun',
     status: 'sick',
