@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Thermometer, ShieldAlert, ArrowRight, Play, CheckCircle } from 'lucide-react';
+import { Stethoscope, Building2, Wrench, Activity, ArrowRight, Play, CheckCircle, Volume2, Loader } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Dynamic female doctor avatar route
@@ -13,41 +13,75 @@ interface DoctorIntroScreenProps {
 
 export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) {
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [playingAudioId, setPlayingAudioId] = useState<number | null>(null);
+  const [isPlayingGreeting, setIsPlayingGreeting] = useState(false);
+  const audioRefs = useRef<{ [key: number]: HTMLAudioElement | null }>({});
+  const greetingAudioRef = useRef<HTMLAudioElement>(null);
 
   // Cards with details of doctor tools
   const introCards = [
     {
       id: 1,
-      title: 'Periksa Jantung',
-      description: "Dokter menggunakan stetoskop untuk mendengarkan detak jantungmu yang hebat! 'Dag-dig-dug!'",
-      icon: <Heart className="w-6 h-6 text-rose-500 fill-rose-100" />,
+      title: 'Apa Itu Dokter Anak?',
+      description: 'Dokter anak adalah dokter yang merawat dan menjaga kesehatan anak-anak dari bayi sampai remaja. Dokter anak akan membantumu kalau kamu sakit dan memastikan kamu tumbuh sehat!',
+      icon: <Stethoscope className="w-6 h-6 text-rose-500" />,
       colorClass: 'border-rose-200 bg-rose-50 hover:bg-rose-100/50',
       activeColor: 'ring-rose-300 border-rose-400 bg-rose-50',
-      tagline: "Detak jantung sehatmu menyanyi gembira!"
+      audioFile: '/assets/audio/dokter-intro-card-1.mp3'
     },
     {
       id: 2,
-      title: 'Cek Suhu Tubuh',
-      description: 'Termometer membantu dokter tahu apakah tubuhmu sedang butuh istirahat hangat atau siap bermain lari-larian.',
-      icon: <Thermometer className="w-6 h-6 text-cyan-500" />,
+      title: 'Di Mana Dokter Anak Bekerja?',
+      description: 'Dokter anak bekerja di banyak tempat, seperti rumah sakit, klinik, dan puskesmas. Kamu bisa menemui dokter anak kapan saja kamu merasa tidak enak badan!',
+      icon: <Building2 className="w-6 h-6 text-cyan-500" />,
       colorClass: 'border-cyan-200 bg-cyan-50 hover:bg-cyan-100/50',
       activeColor: 'ring-cyan-300 border-cyan-400 bg-cyan-50',
-      tagline: 'Suhu normal itu dingin segar seperti semangka!'
+      audioFile: '/assets/audio/dokter-intro-card-2.mp3'
     },
     {
       id: 3,
-      title: 'Teman Kesehatanmu',
-      description: 'Dokter bukan orang yang menakutkan. Kami adalah tim rhasiamu untuk melawan kuman jahat!',
-      icon: <ShieldAlert className="w-6 h-6 text-emerald-500 fill-emerald-100" />,
+      title: 'Alat-Alat Dokter Anak',
+      description: 'Dokter anak menggunakan banyak alat untuk memeriksamu, seperti stetoskop untuk mendengar detak jantung, termometer untuk mengukur suhu tubuh, otoskop untuk memeriksa telinga, tensimeter untuk mengukur tekanan darah dan suntikan untuk memberikan agar tubuhmu terlindung dari penyakit!',
+      icon: <Wrench className="w-6 h-6 text-emerald-500" />,
       colorClass: 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100/50',
       activeColor: 'ring-emerald-300 border-emerald-400 bg-emerald-50',
-      tagline: 'Persahabatan sehat tanpa rasa takut!'
+      audioFile: '/assets/audio/dokter-intro-card-3.mp3'
+    },
+    {
+      id: 4,
+      title: 'Penyakit yang Ditangani Dokter Anak',
+      description: 'Dokter anak bisa mengobati banyak penyakit seperti demam, batuk, pilek, diare, asma, dan vaksin. Kalau kamu merasakan gejala-gejala itu, segera temui dokter anak ya!',
+      icon: <Activity className="w-6 h-6 text-amber-500" />,
+      colorClass: 'border-amber-200 bg-amber-50 hover:bg-amber-100/50',
+      activeColor: 'ring-amber-300 border-amber-400 bg-amber-50',
+      audioFile: '/assets/audio/dokter-intro-card-4.mp3'
     }
   ];
 
   const handleCardClick = (id: number) => {
     playClickSound();
     setActiveCard(id === activeCard ? null : id);
+    
+    // Play audio for the card
+    const audioElement = audioRefs.current[id];
+    if (audioElement) {
+      setPlayingAudioId(id);
+      audioElement.currentTime = 0;
+      audioElement.play().catch(() => {
+        setPlayingAudioId(null);
+      });
+    }
+  };
+
+  const playGreetingAudio = () => {
+    playClickSound();
+    if (greetingAudioRef.current) {
+      setIsPlayingGreeting(true);
+      greetingAudioRef.current.currentTime = 0;
+      greetingAudioRef.current.play().catch(() => {
+        setIsPlayingGreeting(false);
+      });
+    }
   };
 
   const handleNext = () => {
@@ -89,12 +123,28 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
         {/* Quote Bubble arrow */}
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45 bg-brand-surface-lowest border-t border-l border-brand-primary/10" />
         
-        <h3 className="text-xl font-bold text-brand-primary text-center">
-          Halo, Dokter {userName || 'Anak'}!
-        </h3>
-        <p className="text-brand-on-surface/90 text-sm md:text-base font-semibold text-center mt-2 leading-relaxed">
-          Aku dokter (doktr asli) ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
-        </p>
+        <div className="flex items-start gap-3">
+          <div className="flex-1">
+            <h3 className="text-xl font-bold text-brand-primary text-center">
+              Halo, Dokter {userName || 'Anak'}!
+            </h3>
+            <p className="text-brand-on-surface/90 text-sm md:text-base font-semibold text-center mt-2 leading-relaxed">
+              Aku dokter (doktr asli) ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
+            </p>
+          </div>
+          <button
+            onClick={playGreetingAudio}
+            disabled={isPlayingGreeting}
+            className="p-2 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 shrink-0 transition-all mt-1"
+            title="Dengarkan salam dokter"
+          >
+            {isPlayingGreeting ? (
+              <Loader className="w-4 h-4 animate-spin" />
+            ) : (
+              <Volume2 className="w-4 h-4" />
+            )}
+          </button>
+        </div>
       </motion.div>
 
       {/* Tool Cards list */}
@@ -112,7 +162,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
                 isActive ? card.activeColor + ' ring-4' : card.colorClass
               }`}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-start gap-4">
                 <div className="p-2.5 bg-brand-surface-lowest rounded-xl shadow-inner shrink-0">
                   {card.icon}
                 </div>
@@ -124,22 +174,22 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
                     {card.description}
                   </p>
                 </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick(card.id);
+                  }}
+                  disabled={playingAudioId === card.id}
+                  className="p-2 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 shrink-0 transition-all"
+                  title="Dengarkan dubbing"
+                >
+                  {playingAudioId === card.id ? (
+                    <Loader className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
+                </button>
               </div>
-
-              {/* Show funny fun fact on active toggle */}
-              <AnimatePresence>
-                {isActive && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden mt-3 pt-3 border-t border-dashed border-neutral-300/60 text-left text-xs font-bold text-brand-primary flex items-center gap-2"
-                  >
-                    <CheckCircle className="w-4 h-4 text-brand-secondary shrink-0" />
-                    <span>{card.tagline}</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           );
         })}
@@ -171,6 +221,24 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
         </p>
       </div>
 
+      {/* Hidden Audio Elements */}
+      {introCards.map((card) => (
+        <audio
+          key={`audio-${card.id}`}
+          ref={(el) => {
+            if (el) audioRefs.current[card.id] = el;
+          }}
+          src={card.audioFile}
+          onEnded={() => setPlayingAudioId(null)}
+        />
+      ))}
+      
+      {/* Greeting Audio Element */}
+      <audio
+        ref={greetingAudioRef}
+        src="/assets/audio/dokter-intro-greeting.mp3"
+        onEnded={() => setIsPlayingGreeting(false)}
+      />
     </div>
   );
 }
