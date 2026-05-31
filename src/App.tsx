@@ -117,6 +117,7 @@ export default function App() {
             level={level}
             xp={xp}
             patientsCheckedToday={patientsCheckedToday}
+            totalPatients={patients.length}
             onNavigateTo={(target) => {
               if (target === 'patient-selection') setScreen('patient-selection');
               if (target === 'mini-quiz') setScreen('mini-quiz');
