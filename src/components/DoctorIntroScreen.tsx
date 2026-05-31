@@ -106,11 +106,6 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
             className="w-full h-full object-cover"
           />
         </motion.div>
-        
-        {/* Floating audio speaker suggestion for narrative hook */}
-        <div className="absolute right-10 top-10 bg-brand-surface-lowest text-brand-primary p-2 rounded-full shadow-md border border-neutral-100 hover:scale-110 cursor-pointer">
-          📢
-        </div>
       </div>
 
       {/* Narrative Dialogue Coach Spec Bubble */}
