@@ -21,7 +21,72 @@ const TOOL_DETAILS = {
 
 const AVAILABLE_TOOLS: ToolType[] = ['stethoscope', 'thermometer', 'otoscope', 'sphygmomanometer', 'syringe'];
 
+// Diagnosis questions and correct answers per patient
+const DIAGNOSIS_DATA: Record<number, { question: string; options: Array<{ label: string; letter: string; isCorrect: boolean }>; }> = {
+  1: { // Budi - Demam
+    question: 'Apa diagnosis yang paling tepat?',
+    options: [
+      { label: 'Demam', letter: 'A', isCorrect: true },
+      { label: 'Batuk & Pilek', letter: 'B', isCorrect: false },
+      { label: 'Diare', letter: 'C', isCorrect: false },
+      { label: 'Radang', letter: 'D', isCorrect: false },
+      { label: 'Vaksin', letter: 'E', isCorrect: false },
+    ]
+  },
+  2: { // Siti - Batuk
+    question: 'Apa diagnosis yang paling tepat?',
+    options: [
+      { label: 'Demam', letter: 'A', isCorrect: false },
+      { label: 'Batuk & Pilek', letter: 'B', isCorrect: true },
+      { label: 'Diare', letter: 'C', isCorrect: false },
+      { label: 'Radang', letter: 'D', isCorrect: false },
+      { label: 'Vaksin', letter: 'E', isCorrect: false },
+    ]
+  },
+  3: { // Andi - Pilek
+    question: 'Apa diagnosis yang paling tepat?',
+    options: [
+      { label: 'Demam', letter: 'A', isCorrect: false },
+      { label: 'Batuk & Pilek', letter: 'B', isCorrect: true },
+      { label: 'Diare', letter: 'C', isCorrect: false },
+      { label: 'Radang', letter: 'D', isCorrect: false },
+      { label: 'Vaksin', letter: 'E', isCorrect: false },
+    ]
+  },
+  4: { // Rina - Diare
+    question: 'Apa diagnosis yang paling tepat?',
+    options: [
+      { label: 'Demam', letter: 'A', isCorrect: false },
+      { label: 'Batuk & Pilek', letter: 'B', isCorrect: false },
+      { label: 'Diare', letter: 'C', isCorrect: true },
+      { label: 'Radang', letter: 'D', isCorrect: false },
+      { label: 'Vaksin', letter: 'E', isCorrect: false },
+    ]
+  },
+  5: { // Dito - Vaksin
+    question: 'Apa diagnosis yang paling tepat?',
+    options: [
+      { label: 'Demam', letter: 'A', isCorrect: false },
+      { label: 'Batuk & Pilek', letter: 'B', isCorrect: false },
+      { label: 'Diare', letter: 'C', isCorrect: false },
+      { label: 'Radang', letter: 'D', isCorrect: false },
+      { label: 'Vaksin', letter: 'E', isCorrect: true },
+    ]
+  },
+  6: { // Pasien Baru - Radang
+    question: 'Apa diagnosis yang paling tepat?',
+    options: [
+      { label: 'Demam', letter: 'A', isCorrect: false },
+      { label: 'Batuk & Pilek', letter: 'B', isCorrect: false },
+      { label: 'Diare', letter: 'C', isCorrect: false },
+      { label: 'Radang', letter: 'D', isCorrect: true },
+      { label: 'Vaksin', letter: 'E', isCorrect: false },
+    ]
+  },
+};
+
 export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenProps) {
+  const [phase, setPhase] = useState<'examination' | 'diagnosis' | 'prescription'>('examination');
   const [activeTool, setActiveTool] = useState<ToolType | 'none'>('none');
   const [showToolInfo, setShowToolInfo] = useState<ToolType | 'none'>('none');
   
@@ -30,23 +95,22 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
   const [isScanning, setIsScanning] = useState<Record<string, boolean>>({});
   
   const [showWrongToolPopup, setShowWrongToolPopup] = useState<ToolType | null>(null);
-
-  const [showPrescriptionPad, setShowPrescriptionPad] = useState(false);
   const [isDraggingTool, setIsDraggingTool] = useState<boolean>(false);
   const [showTutorialHand, setShowTutorialHand] = useState<boolean>(true);
   const [selectedPrescription, setSelectedPrescription] = useState<string | null>(null);
   const [showCertificate, setShowCertificate] = useState(false);
 
   const [showSoundTip, setShowSoundTip] = useState(true);
+  const [selectedDiagnosis, setSelectedDiagnosis] = useState<string | null>(null);
 
-  // Check if all required tools are done
+  // Check if all required tools are done → advance to diagnosis
   useEffect(() => {
     if (patient.requiredTools.length === 0) return;
     const allDone = patient.requiredTools.every(tool => toolsDone[tool]);
-    if (allDone) {
-      setTimeout(() => setShowPrescriptionPad(true), 800);
+    if (allDone && phase === 'examination') {
+      setTimeout(() => setPhase('diagnosis'), 800);
     }
-  }, [toolsDone, patient.requiredTools]);
+  }, [toolsDone, patient.requiredTools, phase]);
 
   // Master Simulation Loop
   useEffect(() => {
@@ -114,12 +178,25 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
   };
 
   const prescriptions = [
-    { key: 'sirup', icon: '🥤', title: 'Sirup Batuk & Demam', correctForId: [1, 3] },
-    { key: 'tetes', icon: '💧', title: 'Obat Tetes Hidung & Telinga', correctForId: [2] },
-    { key: 'permen', icon: '🍬', title: 'Permen Pelega Tenggorokan', correctForId: [4] },
-    { key: 'sertifikat', icon: '📜', title: 'Buku Sertifikat Imunisasi', correctForId: [5] },
-    { key: 'junkfood', icon: '🍿', title: 'Es Krim & Keripik Pedas', correctForId: [] } // Trap!
+    { key: 'obat-demam', icon: '🧴', title: 'Obat Demam', correctForId: [1] }, // Budi (Demam)
+    { key: 'sirup', icon: '🥤', title: 'Sirup Batuk', correctForId: [2] }, // Siti (Batuk)
+    { key: 'obat-pilek', icon: '💧', title: 'Obat Pilek', correctForId: [3] }, // Andi (Pilek)
+    { key: 'oralit', icon: '🧂', title: 'Oralit & Antidiare', correctForId: [4] }, // Rina (Diare)
+    { key: 'sertifikat', icon: '📜', title: 'Buku Sertifikat Imunisasi', correctForId: [5] }, // Dito (Vaksin)
+    { key: 'kumur', icon: '💊', title: 'Obat Kumur & Permen Radang', correctForId: [6] }, // Bruno (Radang)
+    //{ key: 'junkfood', icon: '🍿', title: 'Es Krim & Keripik Pedas', correctForId: [] } // Jebakan!
   ];
+
+  const handleDiagnosisClick = (isCorrect: boolean) => {
+    if (isCorrect) {
+      playCorrectSound();
+      setTimeout(() => setPhase('prescription'), 600);
+    } else {
+      playIncorrectSound();
+      alert('Hmm, diagnosis itu kurang tepat ya! Coba pilih diagnosis lain berdasarkan gejala yang teman kita alami.');
+      setSelectedDiagnosis(null);
+    }
+  };
 
   const handlePrescriptionClick = (key: string, correctIds: number[]) => {
     setSelectedPrescription(key);
@@ -151,7 +228,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
 
       <div className="flex-1 flex flex-col items-center justify-center py-4 relative">
         <AnimatePresence>
-          {showSoundTip && (
+          {showSoundTip && phase === 'examination' && (
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="absolute top-2 w-full bg-cyan-50 border border-brand-primary/20 p-2.5 rounded-xl z-20 flex items-center gap-2">
               <Volume2 className="w-5 h-5 text-brand-primary animate-bounce shrink-0" />
               <p className="text-[11px] font-semibold text-brand-primary-container leading-normal text-left">
@@ -168,7 +245,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             id={patient.id} 
             name={patient.name}
             faceEmoji={patient.image} 
-            isSick={!showPrescriptionPad} 
+            isSick={phase === 'examination'} 
           />
           
           {/* Glowing pulse ring backdrop when dragging */}
@@ -218,7 +295,8 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
         </div>
 
         {/* Diagnostics Monitor for Required Tools */}
-        <div className="w-full grid grid-cols-2 gap-3 mb-2">
+        {phase === 'examination' && (
+          <div className="w-full grid grid-cols-2 gap-3 mb-2">
           {patient.requiredTools.map(toolKey => {
             const isDone = toolsDone[toolKey];
             const isScn = isScanning[toolKey];
@@ -226,7 +304,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             const details = TOOL_DETAILS[toolKey];
             
             return (
-              <div key={toolKey} data-droptarget={toolKey} className={`p-3 rounded-2xl border transition-colors duration-300 ${isDraggingTool && !isDone && activeTool === toolKey ? 'border-brand-primary shadow-[0_0_15px_rgba(0,188,212,0.5)]' : ''} ${isDone ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-brand-surface-lowest border-neutral-200'}`}>
+              <div key={toolKey} data-diagnostics={toolKey} className={`p-3 rounded-2xl border transition-colors duration-300 pointer-events-none ${isDraggingTool && !isDone && activeTool === toolKey ? 'border-brand-primary shadow-[0_0_15px_rgba(0,188,212,0.5)]' : ''} ${isDone ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-brand-surface-lowest border-neutral-200'}`}>
                 <div className="flex items-center gap-1.5 mb-1.5 pointer-events-none">
                   <span className="text-sm">{details.icon}</span>
                   <p className="text-[10px] font-bold uppercase text-neutral-500">{details.name}</p>
@@ -249,9 +327,10 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             );
           })}
         </div>
+        )}
       </div>
 
-      {!showPrescriptionPad ? (
+      {phase === 'examination' ? (
         <div className="w-full mt-2 space-y-3 shrink-0 relative">
           
           {/* Tutorial Ghost Hand Animation */}
@@ -308,6 +387,42 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             })}
           </div>
         </div>
+      ) : phase === 'diagnosis' ? (
+        <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="w-full bg-gradient-to-br from-cyan-50 to-blue-50 border-t-2 border-brand-primary/20 p-5 mt-2 space-y-4 rounded-3xl shadow-sm leading-relaxed shrink-0">
+          <div className="text-center mb-4">
+            <div className="w-12 h-12 rounded-full bg-brand-primary text-white flex items-center justify-center mx-auto mb-2 text-lg">👧</div>
+            <h3 className="text-sm font-bold text-brand-on-surface">{patient.name} ({patient.age})</h3>
+            <p className="text-xs font-semibold text-neutral-600 mt-1 italic">Keluhan: "{patient.symptom}"</p>
+          </div>
+          
+          <div className="bg-white rounded-2xl p-3.5 border-l-4 border-amber-400 mb-3">
+            <p className="text-xs font-bold text-amber-900 mb-2">📋 Hasil Pemeriksaan:</p>
+            <div className="space-y-1">
+              {patient.requiredTools.map(tool => (
+                <p key={tool} className="text-xs text-neutral-600">✓ {TOOL_DETAILS[tool].name} ✓</p>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs font-bold text-brand-on-surface mb-3">❓ {DIAGNOSIS_DATA[patient.id]?.question || 'Apa diagnosis yang paling tepat?'}</p>
+            {DIAGNOSIS_DATA[patient.id]?.options.map(option => (
+              <motion.button
+                key={option.letter}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                onClick={() => {
+                  setSelectedDiagnosis(option.letter);
+                  handleDiagnosisClick(option.isCorrect);
+                }}
+                className="w-full text-left p-3 rounded-xl border-2 hover:border-brand-primary border-neutral-200 bg-white flex items-center gap-3 transition-colors"
+              >
+                <div className="w-8 h-8 rounded-full bg-brand-primary/15 flex items-center justify-center font-bold text-sm text-brand-primary shrink-0">{option.letter}</div>
+                <span className="text-xs font-semibold text-brand-on-surface">{option.label}</span>
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
       ) : (
         <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="w-full bg-brand-surface-lowest border-t-2 border-brand-primary/10 p-5 mt-2 space-y-4 rounded-3xl shadow-sm leading-relaxed shrink-0">
           <div className="text-left">
