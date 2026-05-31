@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { User, Lightbulb } from 'lucide-react';
+import { User, Lightbulb, Volume2, Loader } from 'lucide-react';
 import { TRIVIA_TIPS } from '../data';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
@@ -15,6 +15,8 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   const [name, setName] = useState('');
   const [tipIndex, setTipIndex] = useState(0);
   const [errorHighlight, setErrorHighlight] = useState(false);
+  const [isPlayingGreeting, setIsPlayingGreeting] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Rotate tips every 7 seconds
   useEffect(() => {
@@ -38,6 +40,17 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   const cycleTip = () => {
     playClickSound();
     setTipIndex((prev) => (prev + 1) % TRIVIA_TIPS.length);
+  };
+
+  const playGreetingAudio = () => {
+    playClickSound();
+    if (audioRef.current) {
+      setIsPlayingGreeting(true);
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        setIsPlayingGreeting(false);
+      });
+    }
   };
 
   return (
@@ -65,15 +78,32 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       </div>
 
       {/* Hero Welcome Greetings */}
-      <div className="my-3 space-y-2">
-        <motion.h1
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold tracking-tight text-brand-primary"
-        >
-          Halo Dokter Kecil!
-        </motion.h1>
+      <div className="my-3 space-y-2 relative">
+        <div className="flex items-center justify-center gap-3">
+          <motion.h1
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-bold tracking-tight text-brand-primary"
+          >
+            Halo Dokter Kecil!
+          </motion.h1>
+          
+          <motion.button
+            onClick={playGreetingAudio}
+            disabled={isPlayingGreeting}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-2.5 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 disabled:cursor-not-allowed shadow-md transition-all"
+            title="Dengarkan sapaan"
+          >
+            {isPlayingGreeting ? (
+              <Loader className="w-5 h-5 animate-spin" />
+            ) : (
+              <Volume2 className="w-5 h-5" />
+            )}
+          </motion.button>
+        </div>
         
         <motion.p
           initial={{ y: -10, opacity: 0 }}
@@ -155,6 +185,13 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         {/* Subtle decorative shining dot */}
         <div className="absolute right-0 bottom-0 w-8 h-8 rounded-full bg-amber-200/20 blur-md pointer-events-none" />
       </motion.div>
+
+      {/* Hidden Audio Element */}
+      <audio
+        ref={audioRef}
+        src="/assets/audio/greeting_voice.mp3"
+        onEnded={() => setIsPlayingGreeting(false)}
+      />
     </div>
   );
 }
