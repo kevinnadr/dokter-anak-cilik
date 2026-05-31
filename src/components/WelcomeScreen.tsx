@@ -81,7 +81,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           transition={{ delay: 0.2 }}
           className="text-brand-on-surface/80 text-base md:text-lg font-medium max-w-xs mx-auto leading-snug"
         >
-          Sudah siap untuk petualangan kesehatan yang seru hari ini?
+          Aku temanmu hari ini! Boleh aku tahu namamu? Yuk, ketik namamu di bawah ini ya!
         </motion.p>
       </div>
 
