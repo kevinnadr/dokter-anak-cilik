@@ -287,17 +287,19 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
                     }}
                     onDragEnd={(e, info) => handleToolDrop(tool, info)}
                     whileDrag={{ scale: 1.1, zIndex: 50 }}
-                    className={`py-2 px-3 pr-8 rounded-xl border-2 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm ${
+                    className={`py-3 px-4 pr-10 rounded-2xl border-2 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm ${
                       isDone || isScn
                         ? 'bg-emerald-100 border-emerald-300 text-emerald-600 cursor-not-allowed opacity-70'
                         : 'bg-white border-neutral-200 text-brand-on-surface hover:bg-neutral-50 cursor-grab active:cursor-grabbing'
                     }`}
                   >
-                    {details.icon} {details.name} {isDone && '✓'}
+                    <span className="text-xl">{details.icon}</span> 
+                    <span>{details.name}</span> 
+                    {isDone && '✓'}
                   </motion.div>
                   <button 
                     onClick={() => setShowToolInfo(tool)}
-                    className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-[10px] bg-neutral-100 text-neutral-500 rounded-lg hover:bg-brand-primary/10 hover:text-brand-primary"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-xs bg-neutral-100 text-neutral-500 rounded-xl hover:bg-brand-primary/10 hover:text-brand-primary transition-colors"
                   >
                     ❓
                   </button>

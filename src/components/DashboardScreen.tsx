@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Award, Calendar } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Micro-avatar generated for Budi
@@ -154,54 +154,7 @@ export function DashboardScreen({
             </div>
           </motion.div>
 
-          {/* Bento Box Green Card 3: Weekly Challenge */}
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="bg-linear-to-b from-[#81dc5a] to-[#246d00] text-white rounded-3xl p-6 shadow-md text-left relative overflow-hidden"
-          >
-            {/* Soft decorative sun ray */}
-            <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
-            
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-white/20 rounded-2xl text-white">
-                <Calendar className="w-6 h-6 animate-pulse" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold tracking-tight text-white leading-snug">
-                  Tantangan Mingguan
-                </h3>
-                <p className="text-sm font-semibold text-white/90 mt-1 leading-normal max-w-xs">
-                  Selesaikan 5 pemeriksaan untuk lencana spesial minggu ini!
-                </p>
-              </div>
-            </div>
 
-            {/* Sub progress bar */}
-            <div className="mt-4 flex items-center gap-2">
-              <span className="text-xs font-bold whitespace-nowrap">
-                Progres: {patientsCheckedToday}/5 Sembuh
-              </span>
-              <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-brand-tertiary-container transition-all"
-                  style={{ width: `${(patientsCheckedToday / 5) * 100}%` }}
-                />
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <motion.button
-                onClick={() => handleAction('patient-selection')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full bg-brand-surface-lowest hover:bg-neutral-50 text-brand-secondary font-bold text-sm py-3 px-6 rounded-2xl shadow-md cursor-pointer flex items-center justify-center gap-1"
-              >
-                Mulai Sekarang 🚀
-              </motion.button>
-            </div>
-          </motion.div>
         </div>
       </div>
     </div>
