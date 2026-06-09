@@ -5,7 +5,7 @@ import { TRIVIA_TIPS } from '../data';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Dynamic boy doctor avatar route
-import boyDoctorAvatar from '../assets/images/boy_doctor_avatar_1780110824805.png';
+import boyDoctorAvatar from '../assets/images/welkamscreen.mp4';
 
 interface WelcomeScreenProps {
   onStart: (name: string) => void;
@@ -68,11 +68,12 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           transition={{ type: 'spring', stiffness: 100, damping: 15 }}
           className="relative w-52 h-52 md:w-60 md:h-60 rounded-[2rem] bg-brand-surface-lowest overflow-hidden border-4 border-brand-surface-low shadow-xl"
         >
-          <img
+          <video
             src={boyDoctorAvatar}
-            alt="Dokter Kecil Boy Avatar"
-            referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
           />
         </motion.div>
       </div>
