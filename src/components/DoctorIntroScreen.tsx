@@ -125,7 +125,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
               Halo, Dokter {userName || 'Anak'}!
             </h3>
             <p className="text-brand-on-surface/90 text-sm md:text-base font-semibold text-center mt-2 leading-relaxed">
-              Aku dokter (doktr asli) ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
+              Aku dokter (dokter asli) ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
             </p>
           </div>
           <button
