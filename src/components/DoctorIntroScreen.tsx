@@ -4,7 +4,7 @@ import { Stethoscope, Building2, Wrench, Activity, ArrowRight, Play, CheckCircle
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Dynamic female doctor avatar route
-import femaleDoctorAvatar from '../assets/images/female_doctor_avatar_1780110850688.png';
+import femaleDoctorAvatar from '../assets/images/auls.png';
 
 interface DoctorIntroScreenProps {
   onNext: () => void;

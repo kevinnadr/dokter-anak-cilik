@@ -6,6 +6,7 @@ import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Dynamic boy doctor avatar route
 import boyDoctorAvatar from '../assets/images/welkamscreen.mp4';
+import greetingAudio from '../assets/audio/welkam.mp3';
 
 interface WelcomeScreenProps {
   onStart: (name: string) => void;
@@ -190,7 +191,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       {/* Hidden Audio Element */}
       <audio
         ref={audioRef}
-        src="/assets/audio/greeting_voice.mp3"
+        src={greetingAudio}
         onEnded={() => setIsPlayingGreeting(false)}
       />
     </div>
