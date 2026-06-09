@@ -126,66 +126,42 @@ export function DashboardScreen({
 
           {/* Card 2: Mini Quiz */}
           <motion.div
-            whileHover={allPatientsExamined ? { scale: 1.01, y: -2 } : {}}
-            onClick={() => allPatientsExamined && handleAction('mini-quiz')}
-            className={`rounded-3xl p-5 shadow-xs flex items-center justify-between gap-3 transition-all group relative overflow-hidden ${
-              allPatientsExamined
-                ? 'bg-brand-surface-lowest hover:bg-neutral-50/50 border border-neutral-200/80 cursor-pointer'
-                : 'bg-neutral-100 border border-neutral-200/50 cursor-not-allowed opacity-70'
-            }`}
+            whileHover={{ scale: 1.01, y: -2 }}
+            onClick={() => handleAction('mini-quiz')}
+            className={`rounded-3xl p-5 shadow-xs flex items-center justify-between gap-3 transition-all group relative overflow-hidden bg-brand-surface-lowest hover:bg-neutral-50/50 border border-neutral-200/80 cursor-pointer`}
           >
             <div className="flex items-center gap-4 text-left flex-1">
               <div className="p-4 bg-amber-100 rounded-2xl text-amber-500 relative">
                 ⭐
-                {!allPatientsExamined && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-2xl">
-                    <Lock className="w-5 h-5 text-white" />
-                  </div>
-                )}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className={`text-lg font-bold leading-snug transition-colors ${
-                    allPatientsExamined
-                      ? 'text-brand-on-surface group-hover:text-amber-500'
-                      : 'text-neutral-500'
-                  }`}>
+                  <h3 className={`text-lg font-bold leading-snug transition-colors text-brand-on-surface group-hover:text-amber-500`}>
                     Mini Quiz
                   </h3>
-                  {!allPatientsExamined && (
-                    <Lock className="w-4 h-4 text-neutral-400" />
-                  )}
                 </div>
-                <p className={`text-xs font-semibold mt-1 ${
-                  allPatientsExamined
-                    ? 'text-neutral-400'
-                    : 'text-neutral-500'
-                }`}>
-                  {allPatientsExamined
-                    ? 'Uji pengetahuanmu dan dapatkan piala emas!'
-                    : `Selesaikan ${totalPatients - patientsCheckedToday} pasien lagi untuk membuka`}
+                <p className={`text-xs font-semibold mt-1 text-neutral-400`}>
+                  Uji pengetahuanmu dan dapatkan piala emas!
                 </p>
               </div>
             </div>
             
             {/* Audio Play Button */}
-            {allPatientsExamined && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  playCardAudio('mini-quiz');
-                }}
-                disabled={playingAudioId === 'mini-quiz'}
-                className="p-2 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 shrink-0 transition-all"
-                title="Dengarkan deskripsi"
-              >
-                {playingAudioId === 'mini-quiz' ? (
-                  <Loader className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </button>
-            )}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                playCardAudio('mini-quiz');
+              }}
+              disabled={playingAudioId === 'mini-quiz'}
+              className="p-2 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 shrink-0 transition-all"
+              title="Dengarkan deskripsi"
+            >
+              {playingAudioId === 'mini-quiz' ? (
+                <Loader className="w-4 h-4 animate-spin" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
+            </button>
             
             <div className="text-4xl opacity-5 text-neutral-900 select-none pointer-events-none font-bold">
               ?
