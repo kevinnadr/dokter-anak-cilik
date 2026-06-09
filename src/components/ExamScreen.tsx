@@ -102,6 +102,8 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
 
   const [showSoundTip, setShowSoundTip] = useState(true);
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<string | null>(null);
+  const [showDiagnosisErrorPopup, setShowDiagnosisErrorPopup] = useState(false);
+  const [showPrescriptionErrorPopup, setShowPrescriptionErrorPopup] = useState(false);
 
   // Check if all required tools are done → advance to diagnosis
   useEffect(() => {
@@ -199,7 +201,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
       setTimeout(() => setPhase('prescription'), 600);
     } else {
       playIncorrectSound();
-      alert('Hmm, diagnosis itu kurang tepat ya! Coba pilih diagnosis lain berdasarkan gejala yang teman kita alami.');
+      setShowDiagnosisErrorPopup(true);
       setSelectedDiagnosis(null);
     }
   };
@@ -211,7 +213,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
       setShowCertificate(true);
     } else {
       playIncorrectSound();
-      alert('Aduh! Tindakan atau resep ini kurang tepat untuk gejala teman kita. Coba pilih resep yang lain ya!');
+      setShowPrescriptionErrorPopup(true);
       setSelectedPrescription(null);
     }
   };
@@ -493,6 +495,56 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
               <h2 className="text-2xl font-black text-brand-primary mt-4">Pemeriksaan Berhasil!</h2>
               <p className="text-xs font-semibold text-neutral-500 my-4">Kamu telah menolong {patient.name} dengan tepat.</p>
               <button onClick={handleFinishAdventure} className="w-full bg-brand-primary text-white font-bold py-3.5 px-6 rounded-2xl shadow-md">Selesai & Ambil Lencana ➔</button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Diagnosis Error Popup */}
+      <AnimatePresence>
+        {showDiagnosisErrorPopup && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-neutral-900/60 flex items-center justify-center p-5 z-50">
+            <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.8, y: 20 }} className="bg-white rounded-3xl p-6 text-center shadow-xl max-w-xs w-full">
+              <div className="text-5xl mb-4 animate-bounce">🤔</div>
+              <h3 className="text-lg font-black text-amber-600 mb-3">Hmm, Diagnosis Kurang Tepat! 🤨</h3>
+              <div className="bg-amber-50 border-l-4 border-amber-400 p-3 rounded-lg mb-4">
+                <p className="text-sm font-semibold text-amber-900 leading-relaxed">
+                  Coba pilih diagnosis lain berdasarkan gejala yang teman kita alami ya! 
+                  <br/>
+                  <span className="text-xs mt-2 block">💡 Perhatikan lagi gejala utamanya: <strong>{patient.symptom}</strong></span>
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowDiagnosisErrorPopup(false)} 
+                className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl shadow-sm transition-colors"
+              >
+                Coba Lagi
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Prescription Error Popup */}
+      <AnimatePresence>
+        {showPrescriptionErrorPopup && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-neutral-900/60 flex items-center justify-center p-5 z-50">
+            <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.8, y: 20 }} className="bg-white rounded-3xl p-6 text-center shadow-xl max-w-xs w-full">
+              <div className="text-5xl mb-4 animate-bounce">😅</div>
+              <h3 className="text-lg font-black text-rose-600 mb-3">Aduh! Resep Kurang Tepat! 🚫</h3>
+              <div className="bg-rose-50 border-l-4 border-rose-400 p-3 rounded-lg mb-4">
+                <p className="text-sm font-semibold text-rose-900 leading-relaxed">
+                  Tindakan atau resep ini kurang tepat untuk gejala teman kita. 
+                  <br/>
+                  Coba pilih resep yang lain ya! 💊
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowPrescriptionErrorPopup(false)} 
+                className="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl shadow-sm transition-colors"
+              >
+                Coba Resep Lain
+              </button>
             </motion.div>
           </motion.div>
         )}
