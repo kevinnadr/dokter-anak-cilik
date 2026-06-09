@@ -55,7 +55,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
   const currentPercent = ((currentIdx + 1) / QUIZ_QUESTIONS.length) * 100;
 
   return (
-    <div className="flex flex-col justify-between min-h-[92vh] max-w-md mx-auto p-5 select-none font-quicksand pb-2 text-center">
+    <div className="flex flex-col justify-between h-full max-w-md mx-auto p-4 select-none font-quicksand text-center">
       
       {/* Top action header */}
       <div className="flex items-center justify-between">
@@ -71,7 +71,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
       </div>
 
       {!quizFinished ? (
-        <div className="flex-1 flex flex-col justify-between py-4">
+        <div className="flex-1 flex flex-col justify-between py-2">
           
           {/* Question layout & progress banner */}
           <div className="space-y-4">
@@ -97,7 +97,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
               key={currentQuestion.id}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-brand-surface-lowest border border-brand-primary/10 rounded-3xl p-6 shadow-sm text-left relative"
+              className="bg-brand-surface-lowest border border-brand-primary/10 rounded-3xl p-4 shadow-sm text-left relative"
             >
               <h2 className="text-xl md:text-2xl font-bold text-brand-on-surface leading-snug">
                 {currentQuestion.question}
@@ -106,7 +106,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
           </div>
 
           {/* Answer options listed vertically */}
-          <div className="space-y-3.5 my-6">
+          <div className="space-y-3 my-4">
             {currentQuestion.options.map((opt) => {
               const isSelected = selectedKey === opt.key;
               const isCorrect = opt.key === currentQuestion.correctAnswer;
@@ -128,7 +128,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
                   whileHover={!answerRevealed ? { scale: 1.01 } : {}}
                   whileTap={!answerRevealed ? { scale: 0.99 } : {}}
                   onClick={() => handleSelectOption(opt.key)}
-                  className={`w-full p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer text-left flex items-start gap-4 outline-none ${optionStyle}`}
+                  className={`w-full p-3 rounded-2xl border-2 transition-all duration-200 cursor-pointer text-left flex items-start gap-3 outline-none ${optionStyle}`}
                 >
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0 shadow-inner ${
                     answerRevealed && isCorrect
@@ -137,7 +137,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
                       ? 'bg-rose-500 text-white'
                       : 'bg-neutral-100 text-neutral-500'
                   }`}>
-                    {opt.key}
+                    {opt.key === 'Benar' ? '✓' : opt.key === 'Salah' ? '✗' : opt.key}
                   </div>
                   <span className="text-sm md:text-base font-semibold leading-snug">
                     {opt.text}
@@ -148,14 +148,14 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
           </div>
 
           {/* Reveal details and explanations */}
-          <div className="min-h-[140px] flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <AnimatePresence>
               {answerRevealed && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="w-full bg-blue-50 border border-brand-primary/15 p-4 rounded-2xl text-left space-y-1.5"
+                  className="w-full bg-blue-50 border border-brand-primary/15 p-3 rounded-2xl text-left space-y-1"
                 >
                   <p className="text-xs font-bold text-brand-primary uppercase tracking-wider flex items-center gap-1.5">
                     <BookOpen className="w-4 h-4 text-brand-primary" /> Penjelasan Dokter:
@@ -179,7 +179,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
                 onClick={handleNext}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="w-full bg-brand-primary text-white font-bold py-3.5 px-6 rounded-2xl shadow-md border-b-4 border-[#004d6c]"
+                className="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-2xl shadow-md border-b-4 border-[#004d6c]"
               >
                 {currentIdx < QUIZ_QUESTIONS.length - 1 ? 'Pertanyaan Berikutnya ➔' : 'Lihat Hasil Kuis ✨'}
               </motion.button>
