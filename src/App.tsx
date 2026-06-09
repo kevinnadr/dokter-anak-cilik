@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Home, BookOpen, Award, Sparkles, Volume2, ArrowLeft } from 'lucide-react';
+import { Home, BookOpen, Award, Sparkles, Volume2, ArrowLeft, LogOut } from 'lucide-react';
 import { ScreenType, Patient, UserProfile } from './types';
 import { INITIAL_PATIENTS, REWARD_BADGES } from './data';
 import { WelcomeScreen } from './components/WelcomeScreen';
@@ -88,16 +88,17 @@ export default function App() {
   };
 
   // Navigation handlers for global tabs
-  const handleTabClick = (targetTab: 'beranda' | 'belajar' | 'piala') => {
+  const handleTabClick = (targetTab: 'beranda' | 'belajar' | 'keluar') => {
     playClickSound();
     if (screen === 'welcome') return; // Cannot navigate from lockscreen
     
     if (targetTab === 'beranda') {
-      setScreen('dashboard');
-    } else if (targetTab === 'belajar') {
       setScreen('doctor-intro');
-    } else if (targetTab === 'piala') {
-      setScreen('piala');
+    } else if (targetTab === 'belajar') {
+      setScreen('dashboard');
+    } else if (targetTab === 'keluar') {
+      setScreen('welcome');
+      setUserName(''); // Reset user name when logging out
     }
   };
 
@@ -157,29 +158,21 @@ export default function App() {
             onBack={() => setScreen('dashboard')}
           />
         );
-      
-      case 'piala':
-        return (
-          <PialaScreen
-            unlockedList={unlockedBadges}
-            onBack={() => setScreen('dashboard')}
-          />
-        );
-      
+
       default:
         return <WelcomeScreen onStart={handleStartApp} />;
     }
   };
 
   return (
-    <div id="app-root-container" className="min-h-screen bg-linear-to-b from-brand-surface-low to-sky-100 flex items-center justify-center p-0 sm:p-6 select-none relative overflow-x-hidden">
+    <div id="app-root-container" className="h-[100dvh] overflow-hidden bg-linear-to-b from-brand-surface-low to-sky-100 flex items-center justify-center p-0 sm:p-6 select-none relative">
       
       {/* Background decorations */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-200/40 rounded-full blur-3xl -z-10 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-brand-secondary-container/25 rounded-full blur-3xl -z-10 pointer-events-none" />
 
       {/* Main Medical Tablet Mockup frame wrapper */}
-      <div id="tablet-mockup-frame" className="w-full max-w-md bg-brand-bg md:bg-brand-bg rounded-none sm:rounded-[3rem] shadow-none sm:shadow-2xl border-0 sm:border-[12px] border-white overflow-hidden flex flex-col justify-between min-h-[96vh] sm:min-h-[85vh] relative bg-slate-50">
+      <div id="tablet-mockup-frame" className="w-full max-w-md bg-brand-bg md:bg-brand-bg rounded-none sm:rounded-[3rem] shadow-none sm:shadow-2xl border-0 sm:border-[12px] border-white overflow-hidden flex flex-col justify-between h-full sm:max-h-[85vh] relative bg-slate-50">
         
         {/* Playful mini glass speaker or header bar */}
         <div className="bg-brand-surface-low/60 border-b border-brand-primary/5 py-3 px-6 flex items-center justify-between text-xs font-semibold shrink-0">
@@ -260,13 +253,13 @@ export default function App() {
             <button
               onClick={() => handleTabClick('beranda')}
               className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer ${
-                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam'
+                screen === 'doctor-intro'
                   ? 'text-brand-primary'
                   : 'text-neutral-400 hover:text-neutral-500'
               }`}
             >
               <div className={`p-2 rounded-2xl transition-all ${
-                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam'
+                screen === 'doctor-intro'
                   ? 'bg-brand-primary/10'
                   : 'group-hover:bg-neutral-50'
               }`}>
@@ -279,13 +272,13 @@ export default function App() {
             <button
               onClick={() => handleTabClick('belajar')}
               className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer ${
-                screen === 'doctor-intro'
+                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam'
                   ? 'text-brand-primary'
                   : 'text-neutral-400 hover:text-neutral-500'
               }`}
             >
               <div className={`p-2 rounded-2xl transition-all ${
-                screen === 'doctor-intro'
+                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam'
                   ? 'bg-brand-primary/10'
                   : 'group-hover:bg-neutral-50'
               }`}>
@@ -294,23 +287,15 @@ export default function App() {
               <span>Belajar</span>
             </button>
 
-            {/* Tab 3: Piala */}
+            {/* Tab 3: Keluar */}
             <button
-              onClick={() => handleTabClick('piala')}
-              className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer ${
-                screen === 'piala' || screen === 'mini-quiz'
-                  ? 'text-brand-primary'
-                  : 'text-neutral-400 hover:text-neutral-500'
-              }`}
+              onClick={() => handleTabClick('keluar')}
+              className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer text-neutral-400 hover:text-red-500`}
             >
-              <div className={`p-2 rounded-2xl transition-all ${
-                screen === 'piala' || screen === 'mini-quiz'
-                  ? 'bg-brand-primary/10'
-                  : 'group-hover:bg-neutral-50'
-              }`}>
-                <Award className="w-5 h-5" />
+              <div className={`p-2 rounded-2xl transition-all group-hover:bg-red-50`}>
+                <LogOut className="w-5 h-5" />
               </div>
-              <span>Piala</span>
+              <span>Keluar</span>
             </button>
 
           </div>

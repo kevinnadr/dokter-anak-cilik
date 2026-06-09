@@ -54,9 +54,9 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-[92vh] max-w-md mx-auto p-5 select-none font-quicksand text-center pb-2">
+    <div className="flex flex-col items-center justify-start h-full max-w-md mx-auto p-4 pt-8 select-none font-quicksand text-center space-y-4">
       {/* Decorative top blobs and image container */}
-      <div className="relative w-full flex justify-center pt-4">
+      <div className="relative w-full flex justify-center mt-2">
         {/* Playful organic backdrop blobs */}
         <div className="absolute top-0 right-10 w-20 h-20 bg-brand-secondary-container/50 rounded-full blur-xl -z-10 animate-pulse" />
         <div className="absolute top-12 left-10 w-16 h-16 bg-brand-primary-container/40 rounded-full blur-xl -z-10" />
@@ -66,7 +66,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 100, damping: 15 }}
-          className="relative w-64 h-64 md:w-72 md:h-72 rounded-[2rem] bg-brand-surface-lowest overflow-hidden border-4 border-brand-surface-low shadow-xl"
+          className="relative w-52 h-52 md:w-60 md:h-60 rounded-[2rem] bg-brand-surface-lowest overflow-hidden border-4 border-brand-surface-low shadow-xl"
         >
           <img
             src={boyDoctorAvatar}
@@ -78,13 +78,13 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       </div>
 
       {/* Hero Welcome Greetings */}
-      <div className="my-3 space-y-2 relative">
+      <div className="space-y-1 relative">
         <div className="flex items-center justify-center gap-3">
           <motion.h1
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold tracking-tight text-brand-primary"
+            className="text-2xl md:text-3xl font-bold tracking-tight text-brand-primary"
           >
             Halo Dokter Kecil!
           </motion.h1>
@@ -94,13 +94,13 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             disabled={isPlayingGreeting}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2.5 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 disabled:cursor-not-allowed shadow-md transition-all"
+            className="p-2 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 disabled:cursor-not-allowed shadow-md transition-all"
             title="Dengarkan sapaan"
           >
             {isPlayingGreeting ? (
-              <Loader className="w-5 h-5 animate-spin" />
+              <Loader className="w-4 h-4 animate-spin" />
             ) : (
-              <Volume2 className="w-5 h-5" />
+              <Volume2 className="w-4 h-4" />
             )}
           </motion.button>
         </div>
@@ -109,7 +109,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-brand-on-surface/80 text-base md:text-lg font-medium max-w-xs mx-auto leading-snug"
+          className="text-brand-on-surface/80 text-sm md:text-base font-medium max-w-xs mx-auto leading-snug"
         >
           Aku temanmu hari ini! Boleh aku tahu namamu? Yuk, ketik namamu di bawah ini ya!
         </motion.p>
@@ -120,7 +120,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         initial={{ y: 15, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="w-full space-y-4 px-2"
+        className="w-full space-y-3 px-2"
       >
         {/* Name input with custom focus state */}
         <div className={`relative flex items-center bg-brand-surface-lowest rounded-2xl border-2 transition-all duration-300 shadow-sm ${
@@ -141,7 +141,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleStart();
             }}
-            className="w-full py-4 px-3 text-lg font-semibold bg-transparent border-none outline-none text-brand-on-surface placeholder:text-neutral-400"
+            className="w-full py-3 px-3 text-base font-semibold bg-transparent border-none outline-none text-brand-on-surface placeholder:text-neutral-400"
           />
         </div>
 
@@ -151,12 +151,12 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           onClick={handleStart}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98, y: 2 }}
-          className="w-full bg-brand-primary text-white font-bold text-xl py-4 px-6 rounded-2xl shadow-lg border-b-4 border-[#004d6c] active:border-b-0 cursor-pointer flex items-center justify-center gap-2"
+          className="w-full bg-brand-primary text-white font-bold text-lg py-3 px-6 rounded-2xl shadow-lg border-b-4 border-[#004d6c] active:border-b-0 cursor-pointer flex items-center justify-center gap-2"
         >
           Ayo Mulai! 🚀
         </motion.button>
 
-        <p className="text-xs font-semibold text-neutral-400">
+        <p className="text-[11px] font-semibold text-neutral-400">
           Gratis & Menyenangkan untuk Semua Anak
         </p>
       </motion.div>
@@ -167,7 +167,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4 }}
         onClick={cycleTip}
-        className="w-full bg-amber-50 hover:bg-amber-100/80 border border-amber-200/80 rounded-2xl p-4 mt-6 flex items-start gap-3 shadow-sm cursor-pointer transition-colors relative overflow-hidden group"
+        className="w-full bg-amber-50 hover:bg-amber-100/80 border border-amber-200/80 rounded-2xl p-3 flex items-start gap-3 shadow-sm cursor-pointer transition-colors relative overflow-hidden group"
       >
         <div className="p-2.5 bg-amber-400/25 rounded-xl text-amber-600 shrink-0">
           <Lightbulb className="w-6 h-6 animate-bounce" />

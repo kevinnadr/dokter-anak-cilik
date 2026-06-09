@@ -96,8 +96,8 @@ export function PatientSelectionScreen({
           </p>
         </div>
 
-        {/* Room Grid selection - 3 columns for 6 patients */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* Room Grid selection - 2 columns for 6 patients */}
+        <div className="grid grid-cols-2 gap-4">
           {patients.map((patient) => {
             const isSick = patient.status === 'sick';
             
