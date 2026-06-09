@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, type Transition } from 'motion/react';
 
 interface FullBodyPatientProps {
   id: number;
@@ -23,13 +23,12 @@ export const FullBodyPatient: React.FC<FullBodyPatientProps> = ({ id, name, face
     }
   };
 
-  const getTransition = () => {
+  const getTransition = (): Transition => {
     if (!isSick) return { repeat: Infinity, duration: 3, ease: 'easeInOut' };
     const dur = id === 1 ? 2 : id === 2 ? 3 : id === 3 ? 0.4 : id === 4 ? 2 : 1.5;
     const del = id === 1 ? 1 : 0;
     return { repeat: Infinity, duration: dur, ease: 'easeInOut', repeatDelay: del };
   };
-
   const imageUrl = isSick 
     ? `/assets/patients/${name.toLowerCase()}_sick.png`
     : `/assets/patients/${name.toLowerCase()}_healthy.png`;
