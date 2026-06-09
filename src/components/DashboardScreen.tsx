@@ -201,14 +201,14 @@ export function DashboardScreen({
         ref={(el) => {
           if (el) audioRefs.current['periksa-pasien'] = el;
         }}
-        src="/assets/audio/dashboard-periksa-pasien.mp3"
+        src="/assets/audio/dashboard/dashboard-periksa-pasien.mp3"
         onEnded={() => setPlayingAudioId(null)}
       />
       <audio
         ref={(el) => {
           if (el) audioRefs.current['mini-quiz'] = el;
         }}
-        src="/assets/audio/dashboard-mini-quiz.mp3"
+        src="/assets/audio/dashboard/dashboard-mini-quiz.mp3"
         onEnded={() => setPlayingAudioId(null)}
       />
     </div>
