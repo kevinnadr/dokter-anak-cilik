@@ -93,9 +93,9 @@ export default function App() {
     if (screen === 'welcome') return; // Cannot navigate from lockscreen
     
     if (targetTab === 'beranda') {
-      setScreen('doctor-intro');
-    } else if (targetTab === 'belajar') {
       setScreen('dashboard');
+    } else if (targetTab === 'belajar') {
+      setScreen('doctor-intro');
     } else if (targetTab === 'keluar') {
       setScreen('welcome');
       setUserName(''); // Reset user name when logging out
@@ -248,43 +248,42 @@ export default function App() {
         {/* Dynamic bottom tabs (Hidden on welcome gate screen for strict UX flow consistency) */}
         {screen !== 'welcome' && (
           <div className="bg-brand-surface-lowest border-t border-neutral-100 py-3.5 px-6 flex justify-around shrink-0 shadow-inner rounded-t-[2.5rem] mt-auto">
-            
-            {/* Tab 1: Beranda */}
-            <button
-              onClick={() => handleTabClick('beranda')}
-              className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer ${
-                screen === 'doctor-intro'
-                  ? 'text-brand-primary'
-                  : 'text-neutral-400 hover:text-neutral-500'
-              }`}
-            >
-              <div className={`p-2 rounded-2xl transition-all ${
-                screen === 'doctor-intro'
-                  ? 'bg-brand-primary/10'
-                  : 'group-hover:bg-neutral-50'
-              }`}>
-                <Home className="w-5 h-5" />
-              </div>
-              <span>Beranda</span>
-            </button>
-
-            {/* Tab 2: Belajar */}
+            {/* Tab 1: Belajar */}
             <button
               onClick={() => handleTabClick('belajar')}
               className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer ${
-                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam'
+                screen === 'doctor-intro'
                   ? 'text-brand-primary'
                   : 'text-neutral-400 hover:text-neutral-500'
               }`}
             >
               <div className={`p-2 rounded-2xl transition-all ${
-                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam'
+                screen === 'doctor-intro'
                   ? 'bg-brand-primary/10'
                   : 'group-hover:bg-neutral-50'
               }`}>
                 <BookOpen className="w-5 h-5" />
               </div>
               <span>Belajar</span>
+            </button>
+
+            {/* Tab 2: Beranda */}
+            <button
+              onClick={() => handleTabClick('beranda')}
+              className={`flex flex-col items-center gap-1 group text-xs font-bold outline-none cursor-pointer ${
+                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam' || screen === 'mini-quiz'
+                  ? 'text-brand-primary'
+                  : 'text-neutral-400 hover:text-neutral-500'
+              }`}
+            >
+              <div className={`p-2 rounded-2xl transition-all ${
+                screen === 'dashboard' || screen === 'patient-selection' || screen === 'exam' || screen === 'mini-quiz'
+                  ? 'bg-brand-primary/10'
+                  : 'group-hover:bg-neutral-50'
+              }`}>
+                <Home className="w-5 h-5" />
+              </div>
+              <span>Beranda</span>
             </button>
 
             {/* Tab 3: Keluar */}
