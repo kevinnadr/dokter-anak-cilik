@@ -101,8 +101,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'Salah', text: 'Salah' },
     ],
     correctAnswer: 'Benar',
-    explanation: 'Dokter anak siap membantu di berbagai fasilitas kesehatan seperti rumah sakit, klinik, maupun puskesmas!',
-    funFact: ' Dokter anak tidak hanya ada di satu tempat saja, mereka tersebar di berbagai fasilitas kesehatan supaya semua anak bisa mudah mendapatkan pertolongan.',
+    explanation: 'Dokter anak tidak hanya ada di satu tempat saja, mereka tersebar di berbagai fasilitas kesehatan supaya semua anak bisa mudah mendapatkan pertolongan.',
+    funFact: 'Di Indonesia ada ribuan puskesmas yang tersebar sampai ke pelosok desa, jadi anak-anak yang tinggal jauh dari kota pun tetap bisa ketemu dokter anak. Dokter anak sengaja ditempatkan di banyak tempat supaya tidak ada anak yang susah dapat pelayanan kesehatan.',
   },
   {
     id: 2,
@@ -112,8 +112,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'Salah', text: 'Salah' },
     ],
     correctAnswer: 'Salah',
-    explanation: 'Termometer digunakan untuk mengukur suhu tubuh. Untuk memeriksa telinga, dokter menggunakan otoskop.',
-    funFact: 'Termometer hanya bisa mengukur panas badan, tidak bisa melihat ke dalam telinga. Makanya dokter pakai alat berbeda yaitu otoskop yang punya cahaya kecil untuk menerangi bagian dalam telinga.',
+    explanation: 'Termometer hanya bisa mengukur panas badan, tidak bisa melihat ke dalam telinga. Makanya dokter pakai alat berbeda yaitu otoskop yang punya cahaya kecil untuk menerangi bagian dalam telinga.',
+    funFact: 'Fakta menariknya, otoskop itu punya lampu kecil di ujungnya yang bisa menerangi bagian dalam telinga yang gelap. Dokter bisa melihat gendang telinga kamu dari luar tanpa harus menyentuhnya sama sekali!',
   },
   {
     id: 3,
@@ -123,8 +123,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'Salah', text: 'Salah' },
     ],
     correctAnswer: 'Benar',
-    explanation: 'Dokter anak memang ahli dalam merawat anak-anak yang sakit, termasuk saat terkena diare.',
-    funFact: ' Diare membuat tubuh anak kehilangan banyak cairan dan bisa berbahaya, makanya dokter anak perlu menanganinya dengan cepat dan tepat.',
+    explanation: 'Diare membuat tubuh anak kehilangan banyak cairan dan bisa berbahaya, makanya dokter anak perlu menanganinya dengan cepat dan tepat.',
+    funFact: 'Diare adalah salah satu penyebab kematian terbesar pada anak-anak di dunia. Dalam sehari tubuh bisa kehilangan banyak sekali cairan akibat diare, makanya dokter anak harus segera menanganinya sebelum tubuh kekurangan cairan.',
   },
   {
     id: 4,
@@ -136,8 +136,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'D', text: 'Puskesmas' },
     ],
     correctAnswer: 'C',
-    explanation: 'Dokter anak bekerja di tempat pelayanan kesehatan seperti rumah sakit, klinik, atau puskesmas.',
-    funFact: 'Mall adalah tempat belanja dan hiburan, bukan tempat pelayanan kesehatan. Dokter anak butuh peralatan medis khusus yang hanya ada di fasilitas kesehatan.',
+    explanation: 'Mall adalah tempat belanja dan hiburan, bukan tempat pelayanan kesehatan. Dokter anak butuh peralatan medis khusus yang hanya ada di fasilitas kesehatan.',
+    funFact: 'Fakta menariknya, di beberapa negara maju seperti Amerika sudah mulai ada klinik kecil di dalam mall. Tapi tetap bukan tempat utama dokter anak bekerja karena peralatan medis lengkap tidak mungkin dipindahkan ke mall.',
   },
   {
     id: 5,
@@ -149,8 +149,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'D', text: 'Tensimeter' },
     ],
     correctAnswer: 'D',
-    explanation: 'Tensimeter (atau sphygmomanometer) berguna untuk mengetahui tekanan darah di dalam tubuh kita.',
-    funFact: 'Tensimeter punya cara kerja khusus yaitu memompa manset di lengan untuk mengukur seberapa kuat darah mengalir di dalam tubuh.',
+    explanation: 'Tensimeter punya cara kerja khusus yaitu memompa manset di lengan untuk mengukur seberapa kuat darah mengalir di dalam tubuh.',
+    funFact: 'Fakta menariknya, tekanan darah normal anak berbeda dengan orang dewasa. Tekanan darah anak jauh lebih rendah dan terus berubah seiring pertumbuhan, makanya dokter anak perlu rutin mengeceknya setiap kunjungan.',
   },
   {
     id: 6,
@@ -162,8 +162,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'D', text: 'Operasi otak' },
     ],
     correctAnswer: 'C',
-    explanation: 'Dokter anak bertugas menjaga kesehatan anak, salah satunya dengan memberikan imunisasi atau vaksin.',
-    funFact: 'Vaksin berisi zat khusus yang mengajarkan tubuh cara melawan penyakit tertentu sebelum penyakit itu datang menyerang.',
+    explanation: 'Vaksin berisi zat khusus yang mengajarkan tubuh cara melawan penyakit tertentu sebelum penyakit itu datang menyerang.',
+    funFact: 'Fakta menariknya, vaksin pertama di dunia ditemukan pada tahun 1796 oleh dokter bernama Edward Jenner untuk melawan penyakit cacar. Berkat vaksin, penyakit cacar berhasil diberantas total dari muka bumi pada tahun 1980!',
   },
   {
     id: 7,
@@ -175,8 +175,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'D', text: 'Supaya anak lebih pintar' },
     ],
     correctAnswer: 'B',
-    explanation: 'Vaksin melatih pasukan tentara di dalam tubuh kita agar selalu siap melawan kuman penyakit jahat.',
-    funFact: 'Vaksin bukan obat penyembuh, tapi pencegah. Dengan vaksin, tubuh sudah siap duluan sebelum kuman berbahaya masuk.',
+    explanation: 'Vaksin bukan obat penyembuh, tapi pencegah. Dengan vaksin, tubuh sudah siap duluan sebelum kuman berbahaya masuk.',
+    funFact: 'Fakta menariknya, saat kamu divaksin tubuhmu sebenarnya sedang "berlatih perang" melawan penyakit. Vaksin mengajarkan sistem imun cara mengenali musuh, jadi kalau kuman aslinya datang, tubuh sudah tahu cara mengalahkannya.',
   },
   {
     id: 8,
@@ -188,8 +188,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { key: 'D', text: 'Otoskop' },
     ],
     correctAnswer: 'D',
-    explanation: 'Otoskop dirancang khusus agar pas masuk ke telinga dan memiliki cahaya terang untuk melihat ke dalam.',
-    funFact: 'Telinga letaknya di dalam dan gelap, jadi dokter butuh alat dengan lampu kecil seperti otoskop untuk bisa melihat dengan jelas kondisi di dalamnya.',
+    explanation: 'Telinga letaknya di dalam dan gelap, jadi dokter butuh alat dengan lampu kecil seperti otoskop untuk bisa melihat dengan jelas kondisi di dalamnya.',
+    funFact: 'Fakta menariknya, gendang telinga manusia itu sangat tipis, hanya sekitar 0,1 mm! Setipis selembar kertas. Makanya dokter harus pakai otoskop yang punya perbesaran khusus supaya bisa melihatnya dengan jelas.',
   },
 ];
 
