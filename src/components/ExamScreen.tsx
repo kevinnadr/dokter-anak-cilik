@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Thermometer, ShieldCheck, HelpCircle, Sparkles, Volume2, Search, Activity, Pipette } from 'lucide-react';
+import { Heart, Thermometer, ShieldCheck, HelpCircle, Sparkles, Volume2, Search, Activity, Pipette, Loader } from 'lucide-react';
 import { Patient, ToolType } from '../types';
 import { playClickSound, playHeartbeatSound, playSuccessSound, playCorrectSound, playIncorrectSound } from '../utils/audio';
 import { FullBodyPatient } from './FullBodyPatient';
@@ -89,6 +89,8 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
   const [phase, setPhase] = useState<'examination' | 'diagnosis' | 'prescription'>('examination');
   const [activeTool, setActiveTool] = useState<ToolType | 'none'>('none');
   const [showToolInfo, setShowToolInfo] = useState<ToolType | 'none'>('none');
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlayingPatientAudio, setIsPlayingPatientAudio] = useState(false);
   
   const [toolsDone, setToolsDone] = useState<Record<string, boolean>>({});
   const [toolsProgress, setToolsProgress] = useState<Record<string, number>>({});
@@ -223,6 +225,17 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
     onCompleteCheckup(patient.id, 50, 'badge-patient-healed');
   };
 
+  const playPatientAudio = () => {
+    playClickSound();
+    if (audioRef.current) {
+      setIsPlayingPatientAudio(true);
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        setIsPlayingPatientAudio(false);
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between min-h-[92vh] max-w-md mx-auto p-5 select-none font-quicksand pb-2 overflow-y-auto no-scrollbar">
       
@@ -296,7 +309,23 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
         </div>
 
         <div className="text-center mb-4">
-          <h3 className="text-xl font-bold text-brand-on-surface">{patient.name} ({patient.age})</h3>
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <h3 className="text-xl font-bold text-brand-on-surface">{patient.name} ({patient.age})</h3>
+            <motion.button
+              onClick={playPatientAudio}
+              disabled={isPlayingPatientAudio}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-1.5 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 disabled:cursor-not-allowed shadow-md transition-all"
+              title="Dengarkan penjelasan pasien"
+            >
+              {isPlayingPatientAudio ? (
+                <Loader className="w-4 h-4 animate-spin" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
+            </motion.button>
+          </div>
           <p className="text-xs font-semibold text-neutral-500 mt-1 max-w-xs leading-normal">
             🤒 "Keluhan: {patient.symptom}"
           </p>
@@ -455,11 +484,6 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }} className="bg-white rounded-3xl p-6 text-center shadow-xl max-w-xs w-full">
               <div className="text-4xl mb-3">⚠️</div>
               <h3 className="text-lg font-black text-rose-500 mb-2">Ops! Alat Kurang Tepat</h3>
-              <p className="text-xs font-semibold text-neutral-600 leading-relaxed mb-4">
-                <strong>{TOOL_DETAILS[showWrongToolPopup].name}</strong> digunakan untuk {TOOL_DETAILS[showWrongToolPopup].desc.toLowerCase()} 
-                Namun, pasien ini memiliki gejala <strong>{patient.symptom}</strong>.
-                <br/><br/>Pilihlah alat lain yang tepat untuk kasus ini!
-              </p>
               <button onClick={() => setShowWrongToolPopup(null)} className="w-full bg-rose-500 text-white font-bold py-3 rounded-xl shadow-sm">Mengerti, Dok!</button>
             </motion.div>
           </motion.div>
@@ -507,13 +531,6 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.8, y: 20 }} className="bg-white rounded-3xl p-6 text-center shadow-xl max-w-xs w-full">
               <div className="text-5xl mb-4 animate-bounce">🤔</div>
               <h3 className="text-lg font-black text-amber-600 mb-3">Hmm, Diagnosis Kurang Tepat! 🤨</h3>
-              <div className="bg-amber-50 border-l-4 border-amber-400 p-3 rounded-lg mb-4">
-                <p className="text-sm font-semibold text-amber-900 leading-relaxed">
-                  Coba pilih diagnosis lain berdasarkan gejala yang teman kita alami ya! 
-                  <br/>
-                  <span className="text-xs mt-2 block">💡 Perhatikan lagi gejala utamanya: <strong>{patient.symptom}</strong></span>
-                </p>
-              </div>
               <button 
                 onClick={() => setShowDiagnosisErrorPopup(false)} 
                 className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl shadow-sm transition-colors"
@@ -532,13 +549,6 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
             <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.8, y: 20 }} className="bg-white rounded-3xl p-6 text-center shadow-xl max-w-xs w-full">
               <div className="text-5xl mb-4 animate-bounce">😅</div>
               <h3 className="text-lg font-black text-rose-600 mb-3">Aduh! Resep Kurang Tepat! 🚫</h3>
-              <div className="bg-rose-50 border-l-4 border-rose-400 p-3 rounded-lg mb-4">
-                <p className="text-sm font-semibold text-rose-900 leading-relaxed">
-                  Tindakan atau resep ini kurang tepat untuk gejala teman kita. 
-                  <br/>
-                  Coba pilih resep yang lain ya! 💊
-                </p>
-              </div>
               <button 
                 onClick={() => setShowPrescriptionErrorPopup(false)} 
                 className="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl shadow-sm transition-colors"
@@ -549,6 +559,13 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Hidden Audio Element for Patient Voice */}
+      <audio
+        ref={audioRef}
+        src={`/assets/audio/patients/patient-${patient.id}.mp3`}
+        onEnded={() => setIsPlayingPatientAudio(false)}
+      />
 
     </div>
   );
