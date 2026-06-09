@@ -58,7 +58,7 @@ export const INITIAL_PATIENTS: Patient[] = [
     status: 'sick',
     symptom: 'Perut mual, buang air besar tidak normal. Diare yang perlu dicek.',
     roomNumber: 4,
-    requiredTools: ['thermometer'],
+    requiredTools: ['stethoscope'],
     results: {
       temperature: 36.8,
     },
