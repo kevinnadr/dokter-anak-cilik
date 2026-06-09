@@ -142,38 +142,44 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
     setIsDraggingTool(false);
     if (toolsDone[tool]) return; // Already finished this tool
     
-    // Get the element at the drop coordinate
+    // Use Bounding Box for the main avatar drop zone to make it super reliable
+    const avatarZone = document.getElementById('patient-avatar-drop-zone');
+    let isDroppedOnAvatar = false;
+    if (avatarZone) {
+      const rect = avatarZone.getBoundingClientRect();
+      const padding = 30; // Make hit area larger than the visual box
+      isDroppedOnAvatar = (
+        info.point.x >= rect.left - padding &&
+        info.point.x <= rect.right + padding &&
+        info.point.y >= rect.top - padding &&
+        info.point.y <= rect.bottom + padding
+      );
+    }
+
     const element = document.elementFromPoint(info.point.x, info.point.y);
     const dropTargetBox = element?.closest('[data-droptarget]');
     const dropTargetTool = dropTargetBox?.getAttribute('data-droptarget');
 
-    // Only allow drop if it's dropped on the corresponding box
-    if (dropTargetTool === tool) {
+    if (isDroppedOnAvatar) {
+      if (patient.requiredTools.includes(tool)) {
+        setIsScanning(prev => ({ ...prev, [tool]: true }));
+        setShowSoundTip(false);
+        setShowTutorialHand(false);
+        setActiveTool(tool);
+      } else {
+         playIncorrectSound();
+         setShowWrongToolPopup(tool);
+      }
+    } else if (dropTargetTool === tool) {
       setIsScanning(prev => ({ ...prev, [tool]: true }));
       setShowSoundTip(false);
       setShowTutorialHand(false);
       setActiveTool(tool);
     } else if (dropTargetTool && dropTargetTool !== tool) {
-      // Dropped on a different tool box, or dragged the wrong tool to a box
       playIncorrectSound();
       setShowWrongToolPopup(tool);
     } else {
-      // If it's dropped on the glowing patient avatar, check if it's required
-      const isDroppedOnAvatar = element?.closest('#patient-avatar-drop-zone');
-      if (isDroppedOnAvatar) {
-        if (patient.requiredTools.includes(tool)) {
-          setIsScanning(prev => ({ ...prev, [tool]: true }));
-          setShowSoundTip(false);
-          setShowTutorialHand(false);
-          setActiveTool(tool);
-        } else {
-           playIncorrectSound();
-           setShowWrongToolPopup(tool);
-        }
-      } else {
-        // Dropped randomly on the screen, snap back
-        setActiveTool('none');
-      }
+      setActiveTool('none');
     }
   };
 
