@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Award, Lock, LockOpen, Volume2, Loader } from 'lucide-react';
+import { Lock, Volume2, Loader, ArrowLeft } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Micro-avatar generated for Budi
@@ -51,14 +51,14 @@ export function DashboardScreen({
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-[92vh] max-w-md mx-auto p-5 select-none font-quicksand pb-2">
+    <div className="flex flex-col justify-start h-full max-w-md mx-auto p-5 select-none font-quicksand space-y-8 pt-6">
       <div className="space-y-6">
         {/* Top Header Row with Name & Tiny Avatar representation */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <motion.div
               whileHover={{ rotate: 10, scale: 1.1 }}
-              className="w-14 h-14 rounded-full border-2 border-brand-primary/30 p-0.5 overflow-hidden bg-brand-surface-lowest shadow-sm"
+              className="w-14 h-14 rounded-full border-2 border-brand-primary/30 p-0.5 overflow-hidden bg-brand-surface-lowest shadow-sm shrink-0"
             >
               <img
                 src={boyDoctorAvatar}
@@ -76,47 +76,7 @@ export function DashboardScreen({
               </p>
             </div>
           </div>
-          
-          <button
-            onClick={() => handleAction('piala')}
-            className="w-10 h-10 bg-brand-surface-lowest border border-neutral-200/80 rounded-full flex items-center justify-center text-brand-tertiary shadow-sm text-lg hover:scale-105 active:scale-95"
-          >
-            ★
-          </button>
         </div>
-
-        {/* Level XP Progress Hub */}
-        <motion.div
-          initial={{ y: 15, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="bg-brand-surface-lowest border border-brand-primary/10 rounded-3xl p-5 shadow-sm"
-        >
-          <div className="flex items-center justify-between text-sm font-bold text-brand-on-surface">
-            <span className="flex items-center gap-1.5 text-brand-primary font-bold">
-              ✨ Level {level}: Dokter Hebat
-            </span>
-            <span className="text-neutral-400">
-              {xp}/{xpMax} XP
-            </span>
-          </div>
-          
-          {/* Progress Bar with glowing neon cyan stripe look */}
-          <div className="w-full h-5 bg-neutral-100 rounded-full mt-3 overflow-hidden p-0.5 border border-neutral-200/50">
-            <motion.div
-              initial={{ width: '0%' }}
-              animate={{ width: `${xpPercentage}%` }}
-              transition={{ duration: 1, ease: 'easeOut' }}
-              className="h-full bg-linear-to-r from-brand-primary to-cyan-400 rounded-full relative"
-            >
-              {/* Candystripe animated layout pattern overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,.15)_25%,transparent_25%,transparent_50%,rgba(255,255,255,.15)_50%,rgba(255,255,255,.15)_75%,transparent_75%,transparent)] bg-[length:1rem_1rem] animate-pulse" />
-            </motion.div>
-          </div>
-          
-          <p className="text-[11px] font-semibold text-neutral-400 mt-2 text-right">
-            Dapatkan XP dengan merawat pasien & kuis!
-          </p>
-        </motion.div>
 
         {/* Action Hub Cards (Examine and Quiz) */}
         <div className="space-y-4">
