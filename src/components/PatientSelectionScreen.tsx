@@ -186,7 +186,7 @@ export function PatientSelectionScreen({
           ref={(el) => {
             if (el) audioRefs.current[patient.roomNumber] = el;
           }}
-          src={`/assets/audio/patient-ruang-${patient.roomNumber}.mp3`}
+          src={`/assets/audio/ruangklinik/patient-ruang-${patient.roomNumber}.mp3`}
           onEnded={() => setPlayingAudioId(null)}
         />
       ))}
@@ -194,7 +194,7 @@ export function PatientSelectionScreen({
       {/* Instruction/Headline Audio Element */}
       <audio
         ref={instructionAudioRef}
-        src="/assets/audio/patient-selection-instruction.mp3"
+        src="/assets/audio/ruangklinik/patient-selection-instruction.mp3"
         onEnded={() => setIsPlayingInstruction(false)}
       />
     </div>
