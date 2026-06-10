@@ -5,7 +5,7 @@ import { TRIVIA_TIPS } from '../data';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Dynamic boy doctor avatar route
-import boyDoctorAvatar from '../assets/images/welkamscreen.mp4';
+import boyDoctorAvatar from '../assets/video/welkam.mp4';
 import greetingAudio from '../assets/audio/welkamfix.mp3';
 
 interface WelcomeScreenProps {
@@ -75,6 +75,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             autoPlay
             loop
             muted
+            playsInline
           />
         </motion.div>
       </div>
