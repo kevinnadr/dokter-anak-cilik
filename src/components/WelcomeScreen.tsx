@@ -55,7 +55,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-full max-w-md mx-auto p-4 pt-8 select-none font-quicksand text-center space-y-4">
+    <div className="flex flex-col items-center justify-start min-h-full h-auto max-w-md mx-auto p-4 pt-8 pb-10 select-none font-quicksand text-center space-y-4">
       {/* Decorative top blobs and image container */}
       <div className="relative w-full flex justify-center mt-2">
         {/* Playful organic backdrop blobs */}
