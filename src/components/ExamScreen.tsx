@@ -4,6 +4,12 @@ import { Heart, Thermometer, ShieldCheck, HelpCircle, Sparkles, Volume2, Search,
 import { Patient, ToolType } from '../types';
 import { playClickSound, playHeartbeatSound, playSuccessSound, playCorrectSound, playIncorrectSound } from '../utils/audio';
 import { FullBodyPatient } from './FullBodyPatient';
+import otoskopeVideo from '../assets/video/exam/otoskop.mp4';
+import stetoskopVideo from '../assets/video/exam/stetoskop.mp4';
+import termometerVideo from '../assets/video/exam/termometer.mp4';
+import tensimeterVideo from '../assets/video/exam/tensimeter.mp4';
+import suntikVideo from '../assets/video/exam/suntik.mp4';
+
 
 interface ExamScreenProps {
   patient: Patient;
@@ -12,11 +18,36 @@ interface ExamScreenProps {
 }
 
 const TOOL_DETAILS = {
-  stethoscope: { name: 'Stetoskop', icon: '🩺', desc: 'Stetoskop digunakan untuk mendengarkan detak jantung dan pernapasan paru-paru.' },
-  thermometer: { name: 'Termometer', icon: '🌡️', desc: 'Termometer mengukur suhu tubuh untuk mengecek apakah pasien demam.' },
-  otoscope: { name: 'Otoskop', icon: '🔦', desc: 'Otoskop adalah senter khusus untuk memeriksa kebersihan telinga dan radang tenggorokan.' },
-  sphygmomanometer: { name: 'Tensimeter', icon: '🫀', desc: 'Tensimeter mengukur tekanan darah pasien untuk memastikan tubuhnya fit.' },
-  syringe: { name: 'Suntikan', icon: '💉', desc: 'Suntikan memberikan cairan obat atau vaksin penting langsung ke dalam tubuh agar kebal.' },
+  stethoscope: { 
+    name: 'Stetoskop', 
+    icon: '🩺', 
+    desc: 'Stetoskop digunakan untuk mendengarkan detak jantung dan pernapasan paru-paru.',
+    video: stetoskopVideo  // ← tambah ini
+  },
+  thermometer: { 
+    name: 'Termometer', 
+    icon: '🌡️', 
+    desc: 'Termometer mengukur suhu tubuh untuk mengecek apakah pasien demam.',
+    video: termometerVideo
+  },
+  otoscope: { 
+    name: 'Otoskop', 
+    icon: '🔦', 
+    desc: 'Otoskop adalah senter khusus untuk memeriksa kebersihan telinga dan radang tenggorokan.',
+    video: otoskopeVideo
+  },
+  sphygmomanometer: { 
+    name: 'Tensimeter', 
+    icon: '🫀', 
+    desc: 'Tensimeter mengukur tekanan darah pasien untuk memastikan tubuhnya fit.',
+    video: '../assets/video/exam/sphygmomanometer.mp4'
+  },
+  syringe: { 
+    name: 'Suntikan', 
+    icon: '💉', 
+    desc: 'Suntikan memberikan cairan obat atau vaksin penting langsung ke dalam tubuh agar kebal.',
+    video: suntikVideo
+  },
 };
 
 const AVAILABLE_TOOLS: ToolType[] = ['stethoscope', 'thermometer', 'otoscope', 'sphygmomanometer', 'syringe'];
@@ -500,7 +531,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
               </h2>
               <div className="rounded-xl overflow-hidden bg-black/10 aspect-video flex items-center justify-center relative mb-4">
                 <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                  <source src={TOOL_DETAILS[showToolInfo].video} type="video/mp4" />
                 </video>
               </div>
               <p className="text-xs font-semibold text-neutral-600 text-left mb-4">{TOOL_DETAILS[showToolInfo].desc}</p>
