@@ -40,7 +40,7 @@ const TOOL_DETAILS = {
     name: 'Tensimeter', 
     icon: '🫀', 
     desc: 'Tensimeter mengukur tekanan darah pasien untuk memastikan tubuhnya fit.',
-    video: '../assets/video/exam/sphygmomanometer.mp4'
+    video: tensimeterVideo
   },
   syringe: { 
     name: 'Suntikan', 
