@@ -27,7 +27,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
       icon: <Stethoscope className="w-6 h-6 text-rose-500" />,
       colorClass: 'border-rose-200 bg-rose-50 hover:bg-rose-100/50',
       activeColor: 'ring-rose-300 border-rose-400 bg-rose-50',
-      audioFile: '/assets/audio/intro/dokter-intro-card-1.mp3'
+      audioFile: '/assets/audio/intro/cardpink.mp3'
     },
     {
       id: 2,
@@ -41,7 +41,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
     {
       id: 3,
       title: 'Alat-Alat Dokter Anak',
-      description: 'Dokter anak menggunakan banyak alat untuk memeriksamu, seperti stetoskop untuk mendengar detak jantung, termometer untuk mengukur suhu tubuh, otoskop untuk memeriksa telinga, tensimeter untuk mengukur tekanan darah dan suntikan untuk memberikan agar tubuhmu terlindung dari penyakit!',
+      description: 'Dokter anak menggunakan banyak alat untuk memeriksamu, seperti stetoskop untuk mendengar detak jantung, termometer untuk mengukur suhu tubuh, otoskop untuk memeriksa telinga, tensimeter untuk mengukur tekanan darah dan suntikan untuk memberikan vaksin agar tubuhmu terlindung dari penyakit!',
       icon: <Wrench className="w-6 h-6 text-emerald-500" />,
       colorClass: 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100/50',
       activeColor: 'ring-emerald-300 border-emerald-400 bg-emerald-50',
@@ -126,7 +126,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
               Halo, Dokter {userName || 'Anak'}!
             </h3>
             <p className="text-brand-on-surface/90 text-sm md:text-base font-semibold text-center mt-2 leading-relaxed">
-              Aku dokter (dokter asli) ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
+              Aku dokter Anak ! Disini aku bakalan ngenalin ke kamu tentang profesi dokter anak. Yuk, kenalan lebih dekat dengan profesi dokter anak! Tekan kartu-kartu di bawah ini untuk tahu lebih banyak ya!
             </p>
           </div>
           <button

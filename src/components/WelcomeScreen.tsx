@@ -6,7 +6,7 @@ import { playClickSound, playSuccessSound } from '../utils/audio';
 
 // Dynamic boy doctor avatar route
 import boyDoctorAvatar from '../assets/video/welkam.mp4';
-import greetingAudio from '../assets/audio/welkamfix.mp3';
+import greetingAudio from '../assets/audio/welkamfixx.mp3';
 
 interface WelcomeScreenProps {
   onStart: (name: string) => void;
