@@ -4,7 +4,7 @@ import { Lock, Volume2, Loader, ArrowLeft } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
 import periksaPasienAudio from '../assets/audio/dashboard/periksapasien.mp3';
-import miniQuizAudio from '../assets/audio/dashboard/dashboard-mini-quiz.mp3';
+import miniQuizAudio from '../assets/audio/dashboard/miniquiz.mp3';
 // Micro-avatar generated for Budi
 import boyDoctorAvatar from '../assets/images/boy_doctor_avatar_1780110824805.png';
 
@@ -143,7 +143,7 @@ export function DashboardScreen({
                   </h3>
                 </div>
                 <p className={`text-xs font-semibold mt-1 text-neutral-400`}>
-                  Uji pengetahuanmu dan dapatkan piala emas!
+                  Uji pemahaman dan pengetahuanmu yuk!
                 </p>
               </div>
             </div>
@@ -186,7 +186,7 @@ export function DashboardScreen({
         ref={(el) => {
           if (el) audioRefs.current['mini-quiz'] = el;
         }}
-        src="/assets/audio/dashboard/dashboard-mini-quiz.mp3"
+        src={miniQuizAudio}
         onEnded={() => setPlayingAudioId(null)}
       />
     </div>
