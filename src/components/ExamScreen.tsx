@@ -26,16 +26,16 @@ import patientAudio1 from '../assets/audio/patients/patient-1.mp3';
 import patientAudio2 from '../assets/audio/patients/patient-2.mp3';
 import patientAudio3 from '../assets/audio/patients/patient-3.mp3';
 import patientAudio4 from '../assets/audio/patients/patient-4.mp3';
-// import patientAudio5 from '../assets/audio/patients/patient-5.mp3';
-// import patientAudio6 from '../assets/audio/patients/patient-6.mp3';
+import patientAudio5 from '../assets/audio/patients/patient-5.mp3';
+import patientAudio6 from '../assets/audio/patients/patient-6.mp3';
 
 const PATIENT_AUDIO: Record<number, string> = {
   1: patientAudio1,
   2: patientAudio2,
   3: patientAudio3,
   4: patientAudio4,
-  // 5: patientAudio5,
-  // 6: patientAudio6,
+  5: patientAudio5,
+  6: patientAudio6,
 };
 
 interface ExamScreenProps {
