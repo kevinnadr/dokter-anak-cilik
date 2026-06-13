@@ -18,12 +18,9 @@ import suntikVideo from '../assets/video/exam/suntik.mp4';
 // ├── patient-5.mp3   ← Dito
 // └── patient-6.mp3   ← Bruno
 
-// import diagnosisQuestionAudio from '../assets/audio/diagnosis-question.mp3';
-// import prescriptionQuestionAudio from '../assets/audio/prescription-question.mp3';
+import diagnosisQuestionAudio from '../assets/audio/diagnosa.mp3';
+import prescriptionQuestionAudio from '../assets/audio/obat.mp3';
 
-// ✅ Ganti dengan ini (path string, taruh di public folder)
-const diagnosisQuestionAudio = '/assets/audio/diagnosis-question.mp3';
-const prescriptionQuestionAudio = '/assets/audio/prescription-question.mp3';
 
 import patientAudio1 from '../assets/audio/patients/patient-1.mp3';
 import patientAudio2 from '../assets/audio/patients/patient-2.mp3';
