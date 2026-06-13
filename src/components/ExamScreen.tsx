@@ -549,7 +549,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
               <div className="text-5xl mt-2 animate-bounce">🎓</div>
               <h2 className="text-2xl font-black text-brand-primary mt-4">Pemeriksaan Berhasil!</h2>
               <p className="text-xs font-semibold text-neutral-500 my-4">Kamu telah menolong {patient.name} dengan tepat.</p>
-              <button onClick={handleFinishAdventure} className="w-full bg-brand-primary text-white font-bold py-3.5 px-6 rounded-2xl shadow-md">Selesai & Ambil Lencana ➔</button>
+              <button onClick={handleFinishAdventure} className="w-full bg-brand-primary text-white font-bold py-3.5 px-6 rounded-2xl shadow-md">Selesai</button>
             </motion.div>
           </motion.div>
         )}
