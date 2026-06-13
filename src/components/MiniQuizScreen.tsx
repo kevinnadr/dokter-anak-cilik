@@ -1,9 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Award, BookOpen, AlertCircle, HelpCircle, CheckCircle } from 'lucide-react';
+import { Award, BookOpen, AlertCircle, HelpCircle, CheckCircle, Loader, Volume2 } from 'lucide-react';
 import { QUIZ_QUESTIONS } from '../data';
 import { playClickSound, playCorrectSound, playIncorrectSound, playSuccessSound } from '../utils/audio';
 
+// Import semua audio soal
+// import questionAudio1 from '../assets/audio/quiz/question-1.mp3';
+// import questionAudio2 from '../assets/audio/quiz/question-2.mp3';
+// import questionAudio3 from '../assets/audio/quiz/question-3.mp3';
+// import questionAudio4 from '../assets/audio/quiz/question-4.mp3';
+// import questionAudio5 from '../assets/audio/quiz/question-5.mp3';
+// import questionAudio6 from '../assets/audio/quiz/question-6.mp3';
+// import questionAudio7 from '../assets/audio/quiz/question-7.mp3';
+// import questionAudio8 from '../assets/audio/quiz/question-8.mp3';
+
+// const QUESTION_AUDIO: Record<number, string> = {
+//   1: questionAudio1,
+//   2: questionAudio2,
+//   3: questionAudio3,
+//   4: questionAudio4,
+//   5: questionAudio5,
+//   6: questionAudio6,
+//   7: questionAudio7,
+//   8: questionAudio8,
+// };
+
+// Hapus semua import questionAudio1 dst...
+
+// Ganti dengan ini — pakai path dinamis dari public folder
+const QUESTION_AUDIO: Record<number, string> = {
+  1: '/assets/audio/quiz/question-1.mp3',
+  2: '/assets/audio/quiz/question-2.mp3',
+  3: '/assets/audio/quiz/question-3.mp3',
+  4: '/assets/audio/quiz/question-4.mp3',
+  5: '/assets/audio/quiz/question-5.mp3',
+  6: '/assets/audio/quiz/question-6.mp3',
+  7: '/assets/audio/quiz/question-7.mp3',
+  8: '/assets/audio/quiz/question-8.mp3',
+};
 interface MiniQuizScreenProps {
   userName: string;
   onCompleteQuiz: (xpEarned: number, badgeUnlockedId?: string) => void;
@@ -18,6 +52,19 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
   const [quizFinished, setQuizFinished] = useState(false);
 
   const currentQuestion = QUIZ_QUESTIONS[currentIdx];
+  const questionAudioRef = useRef<HTMLAudioElement>(null);
+  const [isPlayingQuestion, setIsPlayingQuestion] = useState(false);
+
+  const playQuestionAudio = () => {
+    playClickSound();
+    if (questionAudioRef.current) {
+      setIsPlayingQuestion(true);
+      questionAudioRef.current.currentTime = 0;
+      questionAudioRef.current.play().catch(() => {
+        setIsPlayingQuestion(false);
+      });
+    }
+  };
 
   const handleSelectOption = (key: string) => {
     if (answerRevealed) return;
@@ -35,12 +82,18 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
 
   const handleNext = () => {
     playClickSound();
+    // Hentikan audio soal sebelumnya
+    if (questionAudioRef.current) {
+      questionAudioRef.current.pause();
+      questionAudioRef.current.currentTime = 0;
+    }
+    setIsPlayingQuestion(false);
+
     if (currentIdx < QUIZ_QUESTIONS.length - 1) {
       setCurrentIdx((prev) => prev + 1);
       setSelectedKey(null);
       setAnswerRevealed(false);
     } else {
-      // finish quiz
       playSuccessSound();
       setQuizFinished(true);
     }
@@ -93,15 +146,34 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
             </div>
 
             {/* The Question Card */}
+            {/* The Question Card */}
             <motion.div
               key={currentQuestion.id}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               className="bg-brand-surface-lowest border border-brand-primary/10 rounded-3xl p-4 shadow-sm text-left relative"
             >
-              <h2 className="text-xl md:text-2xl font-bold text-brand-on-surface leading-snug">
-                {currentQuestion.question}
-              </h2>
+              <div className="flex items-start gap-3">
+                {/* ✅ Tombol audio soal */}
+                <motion.button
+                  onClick={playQuestionAudio}
+                  disabled={isPlayingQuestion}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 bg-brand-primary text-white rounded-full hover:bg-brand-primary/80 disabled:opacity-60 shadow-md transition-all shrink-0 mt-1"
+                  title="Dengarkan soal"
+                >
+                  {isPlayingQuestion ? (
+                    <Loader className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
+                </motion.button>
+
+                <h2 className="text-xl md:text-2xl font-bold text-brand-on-surface leading-snug">
+                  {currentQuestion.question}
+                </h2>
+              </div>
             </motion.div>
           </div>
 
@@ -264,7 +336,13 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
 
         </motion.div>
       )}
-
+      {/* ✅ Sesudah — komentar dihapus */}
+      <audio
+        key={currentQuestion.id}
+        ref={questionAudioRef}
+        src={QUESTION_AUDIO[currentQuestion.id]}
+        onEnded={() => setIsPlayingQuestion(false)}
+      />
     </div>
   );
 }
