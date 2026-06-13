@@ -2,6 +2,11 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Stethoscope, Building2, Wrench, Activity, ArrowRight, Play, CheckCircle, Volume2, Loader } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/audio';
+import audioPink from '../assets/audio/intro/cardpinkbanget.mp3';
+import audioBiru from '../assets/audio/intro/cardbiru.mp3';
+import audioHijau from '../assets/audio/intro/cardhijau.mp3';
+import audioKuning from '../assets/audio/intro/cardkuning.mp3';
+import audioGreeting from '../assets/audio/intro/cardputih.mp3';
 
 // Dynamic female doctor avatar route
 import femaleDoctorAvatar from '../assets/video/welkam.mp4';
@@ -27,7 +32,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
       icon: <Stethoscope className="w-6 h-6 text-rose-500" />,
       colorClass: 'border-rose-200 bg-rose-50 hover:bg-rose-100/50',
       activeColor: 'ring-rose-300 border-rose-400 bg-rose-50',
-      audioFile: '/assets/audio/intro/cardpink.mp3'
+      audioFile: audioPink
     },
     {
       id: 2,
@@ -36,7 +41,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
       icon: <Building2 className="w-6 h-6 text-cyan-500" />,
       colorClass: 'border-cyan-200 bg-cyan-50 hover:bg-cyan-100/50',
       activeColor: 'ring-cyan-300 border-cyan-400 bg-cyan-50',
-      audioFile: '/assets/audio/intro/dokter-intro-card-2.mp3'
+      audioFile: audioBiru
     },
     {
       id: 3,
@@ -45,7 +50,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
       icon: <Wrench className="w-6 h-6 text-emerald-500" />,
       colorClass: 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100/50',
       activeColor: 'ring-emerald-300 border-emerald-400 bg-emerald-50',
-      audioFile: '/assets/audio/intro/dokter-intro-card-3.mp3'
+      audioFile: audioHijau
     },
     {
       id: 4,
@@ -54,7 +59,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
       icon: <Activity className="w-6 h-6 text-amber-500" />,
       colorClass: 'border-amber-200 bg-amber-50 hover:bg-amber-100/50',
       activeColor: 'ring-amber-300 border-amber-400 bg-amber-50',
-      audioFile: '/assets/audio/intro/dokter-intro-card-4.mp3'
+      audioFile: audioKuning
     }
   ];
 
@@ -233,7 +238,7 @@ export function DoctorIntroScreen({ onNext, userName }: DoctorIntroScreenProps) 
       {/* Greeting Audio Element */}
       <audio
         ref={greetingAudioRef}
-        src="/assets/audio/dokter-intro-greeting.mp3"
+        src={audioGreeting}
         onEnded={() => setIsPlayingGreeting(false)}
       />
     </div>

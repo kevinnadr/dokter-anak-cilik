@@ -255,7 +255,7 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
               onClick={handleFinish}
               className="w-full bg-brand-primary text-white font-bold py-4 px-6 rounded-2xl shadow-lg border-b-4 border-[#004d6c] active:border-b-0 cursor-pointer"
             >
-              Klaim XP Hadiahmu ➔
+              Selesai
             </button>
             <p className="text-xs text-neutral-400 font-bold">
               {correctAnswersCount === QUIZ_QUESTIONS.length ? 'Mendulang +100 XP & Lencana Kuis Master!' : 'Mendulang +50 XP Belajar Sehat!'}
