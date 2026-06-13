@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, UserCheck, Lock, Volume2, Loader } from 'lucide-react';
+import { ArrowLeft, UserCheck, Lock, Volume2, Loader, Hospital } from 'lucide-react';
 import { Patient } from '../types';
 import { playClickSound, playSuccessSound } from '../utils/audio';
+
+import ruangKlinikAudio from '../assets/audio/ruangklinik/RuangKlinik.mp3';
 
 interface PatientSelectionScreenProps {
   patients: Patient[];
@@ -158,7 +160,7 @@ export function PatientSelectionScreen({
                     {playingAudioId === patient.roomNumber ? (
                       <Loader className="w-3 h-3 animate-spin" />
                     ) : (
-                      <Volume2 className="w-3 h-3" />
+                      <Hospital className="w-3 h-3" />
                     )}
                   </button>
                 )}
@@ -194,7 +196,7 @@ export function PatientSelectionScreen({
       {/* Instruction/Headline Audio Element */}
       <audio
         ref={instructionAudioRef}
-        src="/assets/audio/ruangklinik/patient-selection-instruction.mp3"
+        src={ruangKlinikAudio}
         onEnded={() => setIsPlayingInstruction(false)}
       />
     </div>

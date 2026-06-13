@@ -10,6 +10,14 @@ import termometerVideo from '../assets/video/exam/termometer.mp4';
 import tensimeterVideo from '../assets/video/exam/tensimeter.mp4';
 import suntikVideo from '../assets/video/exam/suntik.mp4';
 
+// src/assets/audio/patients/
+// ├── patient-1.mp3   ← Budi
+// ├── patient-2.mp3   ← Siti
+// ├── patient-3.mp3   ← Andi
+// ├── patient-4.mp3   ← Rina
+// ├── patient-5.mp3   ← Dito
+// └── patient-6.mp3   ← Bruno
+
 // import diagnosisQuestionAudio from '../assets/audio/diagnosis-question.mp3';
 // import prescriptionQuestionAudio from '../assets/audio/prescription-question.mp3';
 
@@ -18,17 +26,17 @@ const diagnosisQuestionAudio = '/assets/audio/diagnosis-question.mp3';
 const prescriptionQuestionAudio = '/assets/audio/prescription-question.mp3';
 
 import patientAudio1 from '../assets/audio/patients/patient-1.mp3';
-// import patientAudio2 from '../assets/audio/patients/patient-2.mp3';
+import patientAudio2 from '../assets/audio/patients/patient-2.mp3';
 import patientAudio3 from '../assets/audio/patients/patient-3.mp3';
-// import patientAudio4 from '../assets/audio/patients/patient-4.mp3';
+import patientAudio4 from '../assets/audio/patients/patient-4.mp3';
 // import patientAudio5 from '../assets/audio/patients/patient-5.mp3';
 // import patientAudio6 from '../assets/audio/patients/patient-6.mp3';
 
 const PATIENT_AUDIO: Record<number, string> = {
   1: patientAudio1,
-  // 2: patientAudio2,
+  2: patientAudio2,
   3: patientAudio3,
-  // 4: patientAudio4,
+  4: patientAudio4,
   // 5: patientAudio5,
   // 6: patientAudio6,
 };
