@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { Lock, Volume2, Loader, ArrowLeft } from 'lucide-react';
 import { playClickSound, playSuccessSound } from '../utils/audio';
 
+import periksaPasienAudio from '../assets/audio/dashboard/periksapasien.mp3';
+import miniQuizAudio from '../assets/audio/dashboard/dashboard-mini-quiz.mp3';
 // Micro-avatar generated for Budi
 import boyDoctorAvatar from '../assets/images/boy_doctor_avatar_1780110824805.png';
 
@@ -177,7 +179,7 @@ export function DashboardScreen({
         ref={(el) => {
           if (el) audioRefs.current['periksa-pasien'] = el;
         }}
-        src="/assets/audio/dashboard/dashboard-periksa-pasien.mp3"
+        src={periksaPasienAudio}
         onEnded={() => setPlayingAudioId(null)}
       />
       <audio
