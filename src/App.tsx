@@ -205,41 +205,6 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        {/* Global Level Up Modal Overlay pop */}
-        <AnimatePresence>
-          {showLevelUpAlert && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowLevelUpAlert(false)}
-              className="fixed inset-0 bg-neutral-900/50 backdrop-blur-xs flex items-center justify-center p-6 z-50 pointer-events-auto"
-            >
-              <motion.div
-                initial={{ scale: 0.8, y: 30 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.8 }}
-                className="bg-white rounded-3xl p-6 text-center max-w-xs shadow-2xl space-y-4 border-2 border-brand-primary"
-              >
-                <span className="text-5xl animate-bounce">⚡</span>
-                <h3 className="text-2xl font-black text-brand-primary">Level Up!</h3>
-                <p className="text-sm font-semibold text-neutral-500">
-                  Selamat! Kompetensi penanganan medis klinik anak-mu meningkat demi menolong banyak jiwa!
-                </p>
-                <div className="bg-brand-surface-low border border-brand-primary/15 py-1.5 px-4 rounded-full text-brand-primary font-bold inline-block text-xs uppercase tracking-wider">
-                  Level {level} Tercapai 🎉
-                </div>
-                <button
-                  onClick={() => setShowLevelUpAlert(false)}
-                  className="w-full bg-[#00658c] text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-sm hover:opacity-90"
-                >
-                  Hebat, Lanjutkan!
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Main interactive viewport container */}
         <div className="flex-1 overflow-y-auto no-scrollbar relative min-h-[70vh]">
           {renderActiveScreen()}
