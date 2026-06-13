@@ -4,40 +4,39 @@ import { Award, BookOpen, AlertCircle, HelpCircle, CheckCircle, Loader, Volume2 
 import { QUIZ_QUESTIONS } from '../data';
 import { playClickSound, playCorrectSound, playIncorrectSound, playSuccessSound } from '../utils/audio';
 
-// Import semua audio soal
-// import questionAudio1 from '../assets/audio/quiz/question-1.mp3';
-// import questionAudio2 from '../assets/audio/quiz/question-2.mp3';
-// import questionAudio3 from '../assets/audio/quiz/question-3.mp3';
-// import questionAudio4 from '../assets/audio/quiz/question-4.mp3';
-// import questionAudio5 from '../assets/audio/quiz/question-5.mp3';
-// import questionAudio6 from '../assets/audio/quiz/question-6.mp3';
-// import questionAudio7 from '../assets/audio/quiz/question-7.mp3';
-// import questionAudio8 from '../assets/audio/quiz/question-8.mp3';
+import questionAudio1 from '../assets/audio/quiz/question-1.mp3';
+import questionAudio2 from '../assets/audio/quiz/question-2.mp3';
+import questionAudio3 from '../assets/audio/quiz/question-3.mp3';
+import questionAudio4 from '../assets/audio/quiz/question-4.mp3';
+import questionAudio5 from '../assets/audio/quiz/question-5.mp3';
+import questionAudio6 from '../assets/audio/quiz/question-6.mp3';
+import questionAudio7 from '../assets/audio/quiz/question-7.mp3';
+import questionAudio8 from '../assets/audio/quiz/question-8.mp3';
 
-// const QUESTION_AUDIO: Record<number, string> = {
-//   1: questionAudio1,
-//   2: questionAudio2,
-//   3: questionAudio3,
-//   4: questionAudio4,
-//   5: questionAudio5,
-//   6: questionAudio6,
-//   7: questionAudio7,
-//   8: questionAudio8,
-// };
+const QUESTION_AUDIO: Record<number, string> = {
+  1: questionAudio1,
+  2: questionAudio2,
+  3: questionAudio3,
+  4: questionAudio4,
+  5: questionAudio5,
+  6: questionAudio6,
+  7: questionAudio7,
+  8: questionAudio8,
+};
 
 // Hapus semua import questionAudio1 dst...
 
 // Ganti dengan ini — pakai path dinamis dari public folder
-const QUESTION_AUDIO: Record<number, string> = {
-  1: '/assets/audio/quiz/question-1.mp3',
-  2: '/assets/audio/quiz/question-2.mp3',
-  3: '/assets/audio/quiz/question-3.mp3',
-  4: '/assets/audio/quiz/question-4.mp3',
-  5: '/assets/audio/quiz/question-5.mp3',
-  6: '/assets/audio/quiz/question-6.mp3',
-  7: '/assets/audio/quiz/question-7.mp3',
-  8: '/assets/audio/quiz/question-8.mp3',
-};
+// const QUESTION_AUDIO: Record<number, string> = {
+//   1: '/assets/audio/quiz/question-1.mp3',
+//   2: '/assets/audio/quiz/question-2.mp3',
+//   3: '/assets/audio/quiz/question-3.mp3',
+//   4: '/assets/audio/quiz/question-4.mp3',
+//   5: '/assets/audio/quiz/question-5.mp3',
+//   6: '/assets/audio/quiz/question-6.mp3',
+//   7: '/assets/audio/quiz/question-7.mp3',
+//   8: '/assets/audio/quiz/question-8.mp3',
+// };
 interface MiniQuizScreenProps {
   userName: string;
   onCompleteQuiz: (xpEarned: number, badgeUnlockedId?: string) => void;
