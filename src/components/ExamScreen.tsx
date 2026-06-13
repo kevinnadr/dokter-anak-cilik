@@ -10,6 +10,23 @@ import termometerVideo from '../assets/video/exam/termometer.mp4';
 import tensimeterVideo from '../assets/video/exam/tensimeter.mp4';
 import suntikVideo from '../assets/video/exam/suntik.mp4';
 
+// Tambahkan di bagian atas, setelah import video
+import patientAudio1 from '../assets/audio/patients/patient-1.mp3'; //budi
+//import patientAudio2 from '../assets/audio/patients/patient-2.mp3'; //siti  
+import patientAudio3 from '../assets/audio/patients/patient-3.mp3'; //andi
+//import patientAudio4 from '../assets/audio/patients/patient-4.mp3'; //rina
+//import patientAudio5 from '../assets/audio/patients/patient-5.mp3'; //dito
+//import patientAudio6 from '../assets/audio/patients/patient-6.mp3'; //bruno
+
+// Taruh di luar component, setelah import
+const PATIENT_AUDIO: Record<number, string> = {
+  1: patientAudio1,
+  //2: patientAudio2,
+  3: patientAudio3,
+  //4: patientAudio4,
+  //5: patientAudio5,
+  //6: patientAudio6,
+};
 
 interface ExamScreenProps {
   patient: Patient;
@@ -594,7 +611,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
       {/* Hidden Audio Element for Patient Voice */}
       <audio
         ref={audioRef}
-        src={`/assets/audio/patients/patient-${patient.id}.mp3`}
+        src={PATIENT_AUDIO[patient.id]}
         onEnded={() => setIsPlayingPatientAudio(false)}
       />
 
