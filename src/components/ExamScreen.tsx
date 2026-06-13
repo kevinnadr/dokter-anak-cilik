@@ -474,20 +474,6 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
         </div>
       ) : phase === 'diagnosis' ? (
         <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="w-full bg-gradient-to-br from-cyan-50 to-blue-50 border-t-2 border-brand-primary/20 p-5 mt-2 space-y-4 rounded-3xl shadow-sm leading-relaxed shrink-0">
-          <div className="text-center mb-4">
-            <div className="w-12 h-12 rounded-full bg-brand-primary text-white flex items-center justify-center mx-auto mb-2 text-lg">👧</div>
-            <h3 className="text-sm font-bold text-brand-on-surface">{patient.name} ({patient.age})</h3>
-            <p className="text-xs font-semibold text-neutral-600 mt-1 italic">Keluhan: "{patient.symptom}"</p>
-          </div>
-          
-          <div className="bg-white rounded-2xl p-3.5 border-l-4 border-amber-400 mb-3">
-            <p className="text-xs font-bold text-amber-900 mb-2">📋 Hasil Pemeriksaan:</p>
-            <div className="space-y-1">
-              {patient.requiredTools.map(tool => (
-                <p key={tool} className="text-xs text-neutral-600">✓ {TOOL_DETAILS[tool].name} ✓</p>
-              ))}
-            </div>
-          </div>
 
           <div className="space-y-2">
             <p className="text-xs font-bold text-brand-on-surface mb-3">❓ {DIAGNOSIS_DATA[patient.id]?.question || 'Apa diagnosis yang paling tepat?'}</p>
