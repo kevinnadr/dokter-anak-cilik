@@ -555,7 +555,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
                 {TOOL_DETAILS[showToolInfo].icon} {TOOL_DETAILS[showToolInfo].name}
               </h2>
               <div className="rounded-xl overflow-hidden bg-black/10 aspect-video flex items-center justify-center relative mb-4">
-                <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                <video autoPlay loop playsInline className="w-full h-full object-cover">
                   <source src={TOOL_DETAILS[showToolInfo].video} type="video/mp4" />
                 </video>
               </div>

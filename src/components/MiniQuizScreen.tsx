@@ -45,10 +45,16 @@ interface MiniQuizScreenProps {
 
 export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScreenProps) {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
-  const [answerRevealed, setAnswerRevealed] = useState(false);
-  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
   const [quizFinished, setQuizFinished] = useState(false);
+
+  const selectedKey = answers[currentIdx];
+  const answerRevealed = selectedKey !== undefined;
+
+  const correctAnswersCount = Object.keys(answers).filter((idxStr) => {
+    const idx = parseInt(idxStr);
+    return answers[idx] === QUIZ_QUESTIONS[idx].correctAnswer;
+  }).length;
 
   const currentQuestion = QUIZ_QUESTIONS[currentIdx];
   const questionAudioRef = useRef<HTMLAudioElement>(null);
@@ -67,13 +73,12 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
 
   const handleSelectOption = (key: string) => {
     if (answerRevealed) return;
-    setSelectedKey(key);
-    setAnswerRevealed(true);
+    
+    setAnswers((prev) => ({ ...prev, [currentIdx]: key }));
 
     const isCorrect = key === currentQuestion.correctAnswer;
     if (isCorrect) {
       playCorrectSound();
-      setCorrectAnswersCount((prev) => prev + 1);
     } else {
       playIncorrectSound();
     }
@@ -90,11 +95,23 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
 
     if (currentIdx < QUIZ_QUESTIONS.length - 1) {
       setCurrentIdx((prev) => prev + 1);
-      setSelectedKey(null);
-      setAnswerRevealed(false);
     } else {
       playSuccessSound();
       setQuizFinished(true);
+    }
+  };
+
+  const handlePrev = () => {
+    playClickSound();
+    // Hentikan audio soal sebelumnya
+    if (questionAudioRef.current) {
+      questionAudioRef.current.pause();
+      questionAudioRef.current.currentTime = 0;
+    }
+    setIsPlayingQuestion(false);
+
+    if (currentIdx > 0) {
+      setCurrentIdx((prev) => prev - 1);
     }
   };
 
@@ -218,10 +235,10 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
             })}
           </div>
 
-          {/* Reveal details and explanations */}
+          {/* Reveal details and explanations ONLY if the answer is correct */}
           <div className="flex items-center justify-center">
             <AnimatePresence>
-              {answerRevealed && (
+              {answerRevealed && selectedKey === currentQuestion.correctAnswer && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
@@ -244,16 +261,31 @@ export function MiniQuizScreen({ userName, onCompleteQuiz, onBack }: MiniQuizScr
           </div>
 
           {/* Next Button transition */}
-          <div className="mt-4">
-            {answerRevealed && (
+          <div className="mt-4 flex gap-3 h-[52px]">
+            {currentIdx > 0 ? (
+              <motion.button
+                onClick={handlePrev}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-1/3 bg-neutral-200 text-neutral-700 font-bold py-3 px-2 rounded-2xl shadow-sm border-b-4 border-neutral-300 flex items-center justify-center shrink-0 cursor-pointer"
+              >
+                Kembali
+              </motion.button>
+            ) : (
+              <div className="w-1/3 shrink-0" />
+            )}
+            
+            {answerRevealed ? (
               <motion.button
                 onClick={handleNext}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-2xl shadow-md border-b-4 border-[#004d6c]"
+                className="flex-1 bg-brand-primary text-white font-bold py-3 px-2 rounded-2xl shadow-md border-b-4 border-[#004d6c] flex items-center justify-center cursor-pointer"
               >
-                {currentIdx < QUIZ_QUESTIONS.length - 1 ? 'Pertanyaan Berikutnya ➔' : 'Lihat Hasil Kuis ✨'}
+                {currentIdx < QUIZ_QUESTIONS.length - 1 ? 'Berikutnya ➔' : 'Hasil Kuis ✨'}
               </motion.button>
+            ) : (
+              <div className="flex-1" />
             )}
           </div>
 
