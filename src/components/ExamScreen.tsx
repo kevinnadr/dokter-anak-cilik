@@ -48,31 +48,31 @@ const TOOL_DETAILS = {
   stethoscope: {
     name: 'Stetoskop',
     icon: '🩺',
-    desc: 'Stetoskop digunakan untuk mendengarkan detak jantung dan pernapasan paru-paru.',
+    desc: 'Stetoskop adalah alat yang digunakan untuk mendengarkan detak jantung dan pernapasan paru-paru.',
     video: stetoskopVideo,
   },
   thermometer: {
     name: 'Termometer',
     icon: '🌡️',
-    desc: 'Termometer mengukur suhu tubuh untuk mengecek apakah pasien demam.',
+    desc: 'Termometer adalah alat yang digunakan untuk mengukur suhu tubuh manusia untuk mengecek apakah pasien demam atau tidak.',
     video: termometerVideo,
   },
   otoscope: {
     name: 'Otoskop',
     icon: '🔦',
-    desc: 'Otoskop adalah senter khusus untuk memeriksa kebersihan telinga dan radang tenggorokan.',
+    desc: 'Otoskop adalah senter khusus yang digunakan dokter untuk memeriksa kebersihan telinga dan juga radang tenggorokan pasien.',
     video: otoskopeVideo,
   },
   sphygmomanometer: {
     name: 'Tensimeter',
     icon: '🫀',
-    desc: 'Tensimeter mengukur tekanan darah pasien untuk memastikan tubuhnya fit.',
+    desc: 'Tensimeter adalah alat yang digunakan dokter untuk mengukur tekanan darah pasien untuk memastikan tubuhnya itu sehat.',
     video: tensimeterVideo,
   },
   syringe: {
     name: 'Suntikan',
     icon: '💉',
-    desc: 'Suntikan memberikan cairan obat atau vaksin penting langsung ke dalam tubuh agar kebal.',
+    desc: 'Suntikan adalah alat yang digunakan oleh dokter untuk memberikan cairan obat atau vaksin yang langsung masuk ke dalam tubuh manusia agar manusia terhindar dari berbagai macam penyakit dan juga virus.',
     video: suntikVideo,
   },
 };

@@ -6,7 +6,7 @@ import { playClickSound, playSuccessSound } from '../utils/audio';
 import periksaPasienAudio from '../assets/audio/dashboard/periksapasien.mp3';
 import miniQuizAudio from '../assets/audio/dashboard/miniquiz.mp3';
 // Micro-avatar generated for Budi
-import boyDoctorAvatar from '../assets/images/boy_doctor_avatar_1780110824805.png';
+import boyDoctorAvatar from '../assets/images/female_doctor.png';
 
 interface DashboardScreenProps {
   userName: string;
@@ -128,22 +128,34 @@ export function DashboardScreen({
 
           {/* Card 2: Mini Quiz */}
           <motion.div
-            whileHover={{ scale: 1.01, y: -2 }}
-            onClick={() => handleAction('mini-quiz')}
-            className={`rounded-3xl p-5 shadow-xs flex items-center justify-between gap-3 transition-all group relative overflow-hidden bg-brand-surface-lowest hover:bg-neutral-50/50 border border-neutral-200/80 cursor-pointer`}
+            whileHover={allPatientsExamined ? { scale: 1.01, y: -2 } : {}}
+            onClick={() => allPatientsExamined && handleAction('mini-quiz')}
+            className={`rounded-3xl p-5 shadow-xs flex items-center justify-between gap-3 transition-all group relative overflow-hidden ${
+              allPatientsExamined
+                ? 'bg-brand-surface-lowest hover:bg-neutral-50/50 border border-neutral-200/80 cursor-pointer'
+                : 'bg-neutral-100/80 border border-neutral-200 opacity-80 cursor-not-allowed'
+            }`}
           >
             <div className="flex items-center gap-4 text-left flex-1">
               <div className="p-4 bg-amber-100 rounded-2xl text-amber-500 relative">
                 ⭐
+                {!allPatientsExamined && (
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-neutral-600 rounded-full flex items-center justify-center">
+                    <Lock className="w-3 h-3 text-white" />
+                  </div>
+                )}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className={`text-lg font-bold leading-snug transition-colors text-brand-on-surface group-hover:text-amber-500`}>
+                  <h3 className={`text-lg font-bold leading-snug transition-colors ${
+                    allPatientsExamined ? 'text-brand-on-surface group-hover:text-amber-500' : 'text-neutral-500'
+                  }`}>
                     Mini Quiz
                   </h3>
+                  {!allPatientsExamined && <span className="text-[10px] font-bold bg-neutral-200 text-neutral-500 py-0.5 px-2 rounded-full uppercase tracking-wider">Terkunci</span>}
                 </div>
-                <p className={`text-xs font-semibold mt-1 text-neutral-400`}>
-                  Uji pemahaman dan pengetahuanmu yuk!
+                <p className="text-xs font-semibold mt-1 text-neutral-400">
+                  {allPatientsExamined ? 'Uji pemahaman dan pengetahuanmu yuk!' : `Selesaikan periksa pasien untuk membuka kuis!`}
                 </p>
               </div>
             </div>
