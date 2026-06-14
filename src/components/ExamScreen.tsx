@@ -168,6 +168,8 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
 
   const [showSoundTip, setShowSoundTip] = useState(true);
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<string | null>(null);
+  const [hasExamCompleted, setHasExamCompleted] = useState(false);
+  const [hasDiagnosisCompleted, setHasDiagnosisCompleted] = useState(false);
   const [showDiagnosisErrorPopup, setShowDiagnosisErrorPopup] = useState(false);
   const [showPrescriptionErrorPopup, setShowPrescriptionErrorPopup] = useState(false);
 
@@ -203,10 +205,13 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
   useEffect(() => {
     if (patient.requiredTools.length === 0) return;
     const allDone = patient.requiredTools.every(tool => toolsDone[tool]);
-    if (allDone && phase === 'examination') {
-      setTimeout(() => setPhase('diagnosis'), 800);
+    if (allDone && phase === 'examination' && !hasExamCompleted) {
+      setTimeout(() => {
+        setPhase('diagnosis');
+        setHasExamCompleted(true);
+      }, 800);
     }
-  }, [toolsDone, patient.requiredTools, phase]);
+  }, [toolsDone, patient.requiredTools, phase, hasExamCompleted]);
 
   useEffect(() => {
     let interval: any;
@@ -284,7 +289,14 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
   const handleDiagnosisClick = (isCorrect: boolean) => {
     if (isCorrect) {
       playCorrectSound();
-      setTimeout(() => setPhase('prescription'), 600);
+      if (!hasDiagnosisCompleted) {
+        setTimeout(() => {
+          setPhase('prescription');
+          setHasDiagnosisCompleted(true);
+        }, 600);
+      } else {
+        setPhase('prescription');
+      }
     } else {
       playIncorrectSound();
       setShowDiagnosisErrorPopup(true);
@@ -481,7 +493,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => { setSelectedDiagnosis(option.letter); handleDiagnosisClick(option.isCorrect); }}
-                className="w-full text-left p-3 rounded-2xl border-2 border-neutral-200 bg-white hover:border-brand-primary flex items-center gap-3 transition-colors shadow-sm"
+                className={`w-full text-left p-3 rounded-2xl border-2 hover:border-brand-primary flex items-center gap-3 transition-colors shadow-sm ${selectedDiagnosis === option.letter ? 'bg-brand-primary/10 border-brand-primary' : 'border-neutral-200 bg-white'}`}
               >
                 <div className="w-8 h-8 rounded-full bg-brand-primary/15 flex items-center justify-center font-bold text-sm text-brand-primary shrink-0">
                   {option.letter}
@@ -522,7 +534,7 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={() => handlePrescriptionClick(p.key, p.correctForId)}
-                className="w-full text-left p-3 rounded-2xl border-2 border-neutral-200 bg-white hover:border-brand-primary flex items-center gap-3 transition-colors shadow-sm"
+                className={`w-full text-left p-3 rounded-2xl border-2 hover:border-brand-primary flex items-center gap-3 transition-colors shadow-sm ${selectedPrescription === p.key ? 'bg-brand-primary/10 border-brand-primary' : 'border-neutral-200 bg-white'}`}
               >
                 <div className="w-8 h-8 rounded-full bg-brand-primary/15 flex items-center justify-center text-base shrink-0">
                   {p.icon}
@@ -533,6 +545,42 @@ export function ExamScreen({ patient, onCompleteCheckup, onBack }: ExamScreenPro
           </div>
         </motion.div>
       )}
+
+      {/* Navigation Buttons for ExamScreen */}
+      <div className="mt-4 flex gap-3 h-[52px] shrink-0 w-full">
+        {phase !== 'examination' ? (
+          <motion.button
+            onClick={() => {
+              playClickSound();
+              if (phase === 'prescription') setPhase('diagnosis');
+              if (phase === 'diagnosis') setPhase('examination');
+            }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-1/3 bg-neutral-200 text-neutral-700 font-bold py-3 px-2 rounded-2xl shadow-sm border-b-4 border-neutral-300 flex items-center justify-center cursor-pointer shrink-0"
+          >
+            Kembali
+          </motion.button>
+        ) : (
+          <div className="w-1/3 shrink-0" />
+        )}
+
+        {/* "Berikutnya" button */}
+        {(phase === 'examination' && hasExamCompleted) || (phase === 'diagnosis' && hasDiagnosisCompleted) ? (
+          <motion.button
+            onClick={() => {
+              playClickSound();
+              if (phase === 'examination') setPhase('diagnosis');
+              if (phase === 'diagnosis') setPhase('prescription');
+            }}
+            className="flex-1 bg-brand-primary text-white font-bold py-3 px-2 rounded-2xl shadow-md border-b-4 border-[#004d6c] flex items-center justify-center cursor-pointer"
+          >
+            Berikutnya ➔
+          </motion.button>
+        ) : (
+          <div className="flex-1" />
+        )}
+      </div>
 
       {/* ── Popups ── */}
       <AnimatePresence>
