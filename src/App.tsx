@@ -76,8 +76,8 @@ export default function App() {
       prev.map((p) => (p.id === patientId ? { ...p, status: 'healthy' } : p))
     );
     
-    setPatientsCheckedToday((prev) => Math.min(prev + 1, 5));
-    setScreen('dashboard');
+    setPatientsCheckedToday((prev) => prev + 1);
+    setScreen('patient-selection');
     setSelectedPatient(null);
   };
 
